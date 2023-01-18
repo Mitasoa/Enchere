@@ -89,4 +89,11 @@ public class BackOfficeController {
         model.addAttribute("contentpath", "View/demande");
         return "View/index";
     }
+
+    @RequestMapping("/Statistique")
+    public String stat(Model model, HttpServletRequest request) {
+        model.addAttribute("content", "statistique");
+        model.addAttribute("contentpath", "View/statistique");
+        return "View/index";
+    }
 }

@@ -1,3 +1,5 @@
+var http= new XMLHttpRequest();
+var data
 $(function() {
   /* ChartJS
    * -------
