@@ -1,7 +1,7 @@
-com\enchere\enchere\model\Data.class
-com\enchere\enchere\model\Vehicule.class
-com\enchere\enchere\repository\VehiculeRepository.class
 com\enchere\enchere\EnchereApplication.class
 com\enchere\enchere\model\Erreur.class
 com\enchere\enchere\controller\VehiculeController.class
 com\enchere\enchere\DAO\VehiculeDAO.class
+com\enchere\enchere\model\Vehicule.class
+com\enchere\enchere\repository\VehiculeRepository.class
+com\enchere\enchere\model\Data.class

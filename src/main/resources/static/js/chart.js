@@ -1,27 +1,34 @@
-var http= new XMLHttpRequest();
+var http = new XMLHttpRequest();
 var lien = "http://localhost:8080/";
-function TOP5Categorie(){
-  http.onreadystatechange=function(){
-      if(http.readyState==4 && http.status==200){
-         var token=JSON.parse(http.response);
-        
+var labelTOP5Categories = [];
+var valueTOP5Categories = [12,5,18];
+function TOP5Categorie() {
+  http.onreadystatechange = function () {
+    if (http.readyState == 4 && http.status == 200) {
+      var response = JSON.parse(http.response);
+      var __response = response[0]['data'];
+      for (let index = 0; index < __response.length; index++) {
+        labelTOP5Categories.push(__response[index].nom)
+        //valueTOP5Categories.push(__response[index].id)
       }
+    }
   };
-  http.open("GET",lien+"TOP5CAT");
+  http.open("GET", lien + "Encheres/1");
   http.send(null);
 
 }
-$(function() {
+TOP5Categorie();
+$(function () {
   /* ChartJS
    * -------
    * Data and config for chartjs
    */
   'use strict';
   var data = {
-    labels: ["2013", "2014", "2014", "2015", "2016", "2017"],
+    labels: labelTOP5Categories,
     datasets: [{
       label: '# of Votes',
-      data: [10, 19, 3, 5, 2, 3],
+      data: valueTOP5Categories,
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
@@ -45,32 +52,32 @@ $(function() {
   var multiLineData = {
     labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
     datasets: [{
-        label: 'Dataset 1',
-        data: [12, 19, 3, 5, 2, 3],
-        borderColor: [
-          '#587ce4'
-        ],
-        borderWidth: 2,
-        fill: false
-      },
-      {
-        label: 'Dataset 2',
-        data: [5, 23, 7, 12, 42, 23],
-        borderColor: [
-          '#ede190'
-        ],
-        borderWidth: 2,
-        fill: false
-      },
-      {
-        label: 'Dataset 3',
-        data: [15, 10, 21, 32, 12, 33],
-        borderColor: [
-          '#f44252'
-        ],
-        borderWidth: 2,
-        fill: false
-      }
+      label: 'Dataset 1',
+      data: [12, 19, 3, 5, 2, 3],
+      borderColor: [
+        '#587ce4'
+      ],
+      borderWidth: 2,
+      fill: false
+    },
+    {
+      label: 'Dataset 2',
+      data: [5, 23, 7, 12, 42, 23],
+      borderColor: [
+        '#ede190'
+      ],
+      borderWidth: 2,
+      fill: false
+    },
+    {
+      label: 'Dataset 3',
+      data: [15, 10, 21, 32, 12, 33],
+      borderColor: [
+        '#f44252'
+      ],
+      borderWidth: 2,
+      fill: false
+    }
     ]
   };
   var options = {
@@ -163,29 +170,29 @@ $(function() {
   var multiAreaData = {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     datasets: [{
-        label: 'Facebook',
-        data: [8, 11, 13, 15, 12, 13, 16, 15, 13, 19, 11, 14],
-        borderColor: ['rgba(255, 99, 132, 0.5)'],
-        backgroundColor: ['rgba(255, 99, 132, 0.5)'],
-        borderWidth: 1,
-        fill: true
-      },
-      {
-        label: 'Twitter',
-        data: [7, 17, 12, 16, 14, 18, 16, 12, 15, 11, 13, 9],
-        borderColor: ['rgba(54, 162, 235, 0.5)'],
-        backgroundColor: ['rgba(54, 162, 235, 0.5)'],
-        borderWidth: 1,
-        fill: true
-      },
-      {
-        label: 'Linkedin',
-        data: [6, 14, 16, 20, 12, 18, 15, 12, 17, 19, 15, 11],
-        borderColor: ['rgba(255, 206, 86, 0.5)'],
-        backgroundColor: ['rgba(255, 206, 86, 0.5)'],
-        borderWidth: 1,
-        fill: true
-      }
+      label: 'Facebook',
+      data: [8, 11, 13, 15, 12, 13, 16, 15, 13, 19, 11, 14],
+      borderColor: ['rgba(255, 99, 132, 0.5)'],
+      backgroundColor: ['rgba(255, 99, 132, 0.5)'],
+      borderWidth: 1,
+      fill: true
+    },
+    {
+      label: 'Twitter',
+      data: [7, 17, 12, 16, 14, 18, 16, 12, 15, 11, 13, 9],
+      borderColor: ['rgba(54, 162, 235, 0.5)'],
+      backgroundColor: ['rgba(54, 162, 235, 0.5)'],
+      borderWidth: 1,
+      fill: true
+    },
+    {
+      label: 'Linkedin',
+      data: [6, 14, 16, 20, 12, 18, 15, 12, 17, 19, 15, 11],
+      borderColor: ['rgba(255, 206, 86, 0.5)'],
+      backgroundColor: ['rgba(255, 206, 86, 0.5)'],
+      borderWidth: 1,
+      fill: true
+    }
     ]
   };
 
@@ -216,59 +223,59 @@ $(function() {
 
   var scatterChartData = {
     datasets: [{
-        label: 'First Dataset',
-        data: [{
-            x: -10,
-            y: 0
-          },
-          {
-            x: 0,
-            y: 3
-          },
-          {
-            x: -25,
-            y: 5
-          },
-          {
-            x: 40,
-            y: 5
-          }
-        ],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)'
-        ],
-        borderColor: [
-          'rgba(255,99,132,1)'
-        ],
-        borderWidth: 1
+      label: 'First Dataset',
+      data: [{
+        x: -10,
+        y: 0
       },
       {
-        label: 'Second Dataset',
-        data: [{
-            x: 10,
-            y: 5
-          },
-          {
-            x: 20,
-            y: -30
-          },
-          {
-            x: -25,
-            y: 15
-          },
-          {
-            x: -10,
-            y: 5
-          }
-        ],
-        backgroundColor: [
-          'rgba(54, 162, 235, 0.2)',
-        ],
-        borderColor: [
-          'rgba(54, 162, 235, 1)',
-        ],
-        borderWidth: 1
+        x: 0,
+        y: 3
+      },
+      {
+        x: -25,
+        y: 5
+      },
+      {
+        x: 40,
+        y: 5
       }
+      ],
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)'
+      ],
+      borderColor: [
+        'rgba(255,99,132,1)'
+      ],
+      borderWidth: 1
+    },
+    {
+      label: 'Second Dataset',
+      data: [{
+        x: 10,
+        y: 5
+      },
+      {
+        x: 20,
+        y: -30
+      },
+      {
+        x: -25,
+        y: 15
+      },
+      {
+        x: -10,
+        y: 5
+      }
+      ],
+      backgroundColor: [
+        'rgba(54, 162, 235, 0.2)',
+      ],
+      borderColor: [
+        'rgba(54, 162, 235, 1)',
+      ],
+      borderWidth: 1
+    }
     ]
   }
 
