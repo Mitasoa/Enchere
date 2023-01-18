@@ -8,14 +8,19 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.enchere.enchere.DAO.HistoriqueDAO;
 import com.enchere.enchere.DAO.PhotoDAO;
 import com.enchere.enchere.model.Admin;
 import com.enchere.enchere.model.Data;
@@ -27,6 +32,7 @@ import com.enchere.enchere.repository.LoginRepository;
 import com.enchere.enchere.repository.PhotoProduit;
 import com.enchere.enchere.repository.UtilisateurRepository;
 import com.enchere.enchere.model.*;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class FrontOfficeController {
@@ -41,7 +47,13 @@ public class FrontOfficeController {
     PhotoDAO photo;
 
     @Autowired
+    HistoriqueDAO histo;
+
+    @Autowired
     UtilisateurRepository logREP;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     private Data data = new Data();
 
@@ -103,4 +115,20 @@ public class FrontOfficeController {
         // photo.
         return photo.findById("{id:" + 1 + "}");
     }
+
+    @RequestMapping(value = "/histo/{nom}", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public List<HistoriqueUtilisateur> Histo(@PathVariable(value = "nom") String param) {
+        // return histo.findAll();
+        Query query = new Query();
+        query.addCriteria(Criteria.where("nom").is(param));
+        return mongoTemplate.find(query, HistoriqueUtilisateur.class);
+    }
+
+    @RequestMapping(value = "/TEST/{nom}", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public String TEST(@PathVariable(value = "nom") String param) {
+        return param;
+    }
+
 }

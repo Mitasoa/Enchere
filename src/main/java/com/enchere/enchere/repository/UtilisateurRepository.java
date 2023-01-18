@@ -33,4 +33,11 @@ public class UtilisateurRepository {
         }
         return tokenVR;
     }
+
+    public Utilisateur getOneUtilisateur(int id) {
+        String sql = "select * from utilisateur where id=?";
+        ArrayList<Utilisateur> result = (ArrayList<Utilisateur>) jdbcTemplate.query(sql,
+                new BeanPropertyRowMapper<Utilisateur>(Utilisateur.class), id);
+        return result.get(0);
+    }
 }
