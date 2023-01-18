@@ -1,4 +1,16 @@
 var http= new XMLHttpRequest();
+var lien = "http://localhost:8080/";
+function TOP5Categorie(){
+  http.onreadystatechange=function(){
+      if(http.readyState==4 && http.status==200){
+         var token=JSON.parse(http.response);
+        
+      }
+  };
+  http.open("GET",lien+"TOP5CAT");
+  http.send(null);
+
+}
 $(function() {
   /* ChartJS
    * -------
