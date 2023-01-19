@@ -31,13 +31,13 @@ function Statistique1() {
       }
     }
   };
-  http.open("GET", lien + "CategorieRentables?id=");
+  http.open("GET", lien + "CategorieRentables");
   http.send(null);
 }
 function downEncheriser(){
   alert();
 }
-Statistique("");
+Statistique();
 Statistique1();
 $(function () {
   /* ChartJS

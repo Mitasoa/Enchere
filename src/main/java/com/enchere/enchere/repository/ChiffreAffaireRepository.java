@@ -37,11 +37,10 @@ public class ChiffreAffaireRepository {
         for (int i = 0;i < produits.size(); i++) {
             float prix = ((Produit)produits.get(i)).getPrix();
             int id = ((Produit)produits.get(i)).getId();
-            String insert = "INSERT INTO Commission VALUES (DEFAULT,(SELECT taux FROM TauxComission ORDER BY date DESC LIMIT 1),DEFAULT)";
+            String insert = "INSERT INTO Commission VALUES (DEFAULT,((SELECT taux FROM TauxComission ORDER BY date DESC LIMIT 1)/100)*("+prix+"),CURRENT_TIMESTAMP,?)";
             String update = "UPDATE Produit set etat = 1 WHERE id = ?";
-            jdbcTemplate.update(insert);
+            jdbcTemplate.update(insert,id);
             jdbcTemplate.update(update, id);
-            System.out.println("OKKK");
         }
     }
 }

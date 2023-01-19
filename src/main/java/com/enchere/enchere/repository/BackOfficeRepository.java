@@ -14,6 +14,7 @@ import com.enchere.enchere.model.Admin;
 import com.enchere.enchere.model.Categorie;
 import com.enchere.enchere.model.Demande;
 import com.enchere.enchere.model.DemandeUtilisateur;
+import com.enchere.enchere.model.TauxComission;
 
 @Repository
 public class BackOfficeRepository {
@@ -88,5 +89,15 @@ public class BackOfficeRepository {
     public void repondreDemande(int idDemande, int etat) {
         String sql = "UPDATE Demande set etat ? WHERE id = ?";
         jdbcTemplate.update(sql, idDemande, etat);
+    }
+
+    public ArrayList<TauxComission> taux() {
+        String sql = "SELECT * FROM TauxComission";
+        return (ArrayList<TauxComission>) jdbcTemplate.query(sql, new BeanPropertyRowMapper<TauxComission>(TauxComission.class));
+    }
+
+    public void insertTaux(float taux) {
+        String sql = "INSERT INTO TauxComission (taux) VALUES (?)";
+        jdbcTemplate.update(sql, taux);
     }
 }

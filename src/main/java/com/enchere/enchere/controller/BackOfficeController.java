@@ -111,4 +111,23 @@ public class BackOfficeController {
         model.addAttribute("contentpath", "View/statistique");
         return "View/index";
     }
+
+
+    @RequestMapping("/Parametrage")
+    public String param(Model model, HttpServletRequest request) {
+        if(request.getParameter("taux") != null){
+            try {
+                backRep.insertTaux(Float.parseFloat(request.getParameter("taux")));
+                model.addAttribute("success", "Taux ajouter avec succès");*
+            }catch (Exception e) {
+                e.printStackTrace();
+                model.addAttribute("error", "Une erreur s'est produite !");
+            } 
+        }
+        ArrayList allParam = backRep.taux();
+        model.addAttribute("allParam", allParam);
+        model.addAttribute("content", "parametrage");
+        model.addAttribute("contentpath", "View/parametrage");
+        return "View/index";
+    }
 }
