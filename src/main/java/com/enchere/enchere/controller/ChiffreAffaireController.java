@@ -82,4 +82,24 @@ public class ChiffreAffaireController {
         __data.add(data);
         return __data;
     }
+
+    // Select
+    @RequestMapping(value = "/Comissions", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    @CrossOrigin
+    public ArrayList<Data> executeCommission() {
+        ArrayList<Data> __data = new ArrayList<>();
+        try {
+            rep.execute();
+            error.add("Execution sans erreur");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            status = 500;
+            message = "Error d'acces base de donnee detecter";
+            Erreur __error = new Erreur(status, message);
+            error.add(__error);
+        }
+        __data.add(data);
+        return __data;
+    }
 }
