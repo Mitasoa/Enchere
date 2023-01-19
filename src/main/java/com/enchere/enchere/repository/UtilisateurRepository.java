@@ -15,6 +15,6 @@ public class UtilisateurRepository implements UtilisateurDAO {
     public void insertUtilisateur(Utilisateur utilisateur) {
         String sql = "INSERT INTO utilisateur VALUES(DEFAULT,?,?,?,?)";
         jdbcTemplate.update(sql, utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getMail(),
-                utilisateur.getMotdepasse());
+                utilisateur.getMotDePasse());
     }
 }

@@ -223,4 +223,15 @@ FROM
     JOIN CATEGORIE C
     ON C.ID = H.CATEGORIEID
 WHERE
-    UTILISATEURID=?;
+-- <<<<<<< HEAD
+--     UTILISATEURID=?;
+-- =======
+--     UTILISATEURID=?;
+
+-- CREATE TABLE PhotoProduit 
+-- (
+--     ID SERIAL PRIMARY KEY,
+--     IDPRODUIT INT REFERENCES PRODUIT(ID),
+--     Photo BYTEA
+-- );
+-- >>>>>>> Mitasoa

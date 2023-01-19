@@ -42,6 +42,7 @@ public class ChiffreAffaireController {
         __data.add(data);
         return __data;
     }
+
     // Select
     @RequestMapping(value = "/ChiffreAffaires/mois", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
@@ -61,6 +62,7 @@ public class ChiffreAffaireController {
         __data.add(data);
         return __data;
     }
+
     // Select
     @RequestMapping(value = "/ChiffreAffaires/an", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody

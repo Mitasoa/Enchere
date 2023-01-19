@@ -2,23 +2,6 @@ package com.enchere.enchere.model;
 
 public class Utilisateur {
     private int id;
-    public String nom;
-    public String prenom;
-    public String mail;
-    public String motdepasse;
-    public float solde;
-
-    public Utilisateur() {
-    }
-
-    public Utilisateur(int id, String nom, String prenom, String mail, String motdepasse, float solde) {
-        this.id = id;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.mail = mail;
-        this.motdepasse = motdepasse;
-        this.solde = solde;
-    }
 
     public int getId() {
         return id;
@@ -28,6 +11,8 @@ public class Utilisateur {
         this.id = id;
     }
 
+    private String nom;
+
     public String getNom() {
         return nom;
     }
@@ -35,6 +20,8 @@ public class Utilisateur {
     public void setNom(String nom) {
         this.nom = nom;
     }
+
+    private String prenom;
 
     public String getPrenom() {
         return prenom;
@@ -44,6 +31,8 @@ public class Utilisateur {
         this.prenom = prenom;
     }
 
+    private String mail;
+
     public String getMail() {
         return mail;
     }
@@ -52,19 +41,35 @@ public class Utilisateur {
         this.mail = mail;
     }
 
-    public String getMotdepasse() {
-        return motdepasse;
+    private String motDePasse;
+
+    public String getMotDePasse() {
+        return motDePasse;
     }
 
-    public void setMotdepasse(String motdepasse) {
-        this.motdepasse = motdepasse;
+    public void setMotDePasse(String motDePasse) {
+        this.motDePasse = motDePasse;
     }
+
+    private float solde;
 
     public float getSolde() {
         return solde;
     }
 
     public void setSolde(float solde) {
+        this.solde = solde;
+    }
+
+    public Utilisateur() {
+    }
+
+    public Utilisateur(int id, String nom, String prenom, String mail, String motdepasse, float solde) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.mail = mail;
+        this.motDePasse = motdepasse;
         this.solde = solde;
     }
 }

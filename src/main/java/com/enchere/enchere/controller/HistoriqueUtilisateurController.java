@@ -1,6 +1,5 @@
 package com.enchere.enchere.controller;
 
-
 import com.enchere.enchere.model.Data;
 import com.enchere.enchere.model.Erreur;
 import com.enchere.enchere.model.HistoriqueUtilisateur;

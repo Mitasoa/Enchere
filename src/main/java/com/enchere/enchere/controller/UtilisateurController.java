@@ -22,29 +22,30 @@ public class UtilisateurController {
     String message;
     int status;
 
-    // Insert
-    @RequestMapping(value = "/Utilisateurs", method = RequestMethod.POST, produces = "application/json")
-    @ResponseBody
-    public ArrayList<Data> insertModele(HttpServletRequest request) {
-        Utilisateur retour = new Utilisateur();
-        ArrayList<Data> __data = new ArrayList<>();
-        try {
-            retour.setNom((request.getParameter("nom")));
-            retour.setPrenom((request.getParameter("prenom")));
-            retour.setMail((request.getParameter("mail")));
-            retour.setMotdepasse((request.getParameter("motdepasse")));
-            rep.insertUtilisateur(retour);
-            ArrayList<Utilisateur> utilisateurs = new ArrayList<>();
-            utilisateurs.add(retour);
-            data.setData(utilisateurs);
-        } catch (Exception e) {
-            status = 500;
-            message = "Error d'acces base de donnee detecter";
-            Erreur __error = new Erreur(status, message);
-            error.add(__error);
-            data.setData(error);
-        }
-        __data.add(data);
-        return __data;
-    }
+    // // Insert
+    // @RequestMapping(value = "/Utilisateurs", method = RequestMethod.POST,
+    // produces = "application/json")
+    // @ResponseBody
+    // public ArrayList<Data> ajoutModele(HttpServletRequest request) {
+    // Utilisateur retour = new Utilisateur();
+    // ArrayList<Data> __data = new ArrayList<>();
+    // try {
+    // retour.setNom((request.getParameter("nom")));
+    // retour.setPrenom((request.getParameter("prenom")));
+    // retour.setMail((request.getParameter("mail")));
+    // retour.setMotDePasse((request.getParameter("motdepasse")));
+    // rep.insertUtilisateur(retour);
+    // ArrayList<Utilisateur> utilisateurs = new ArrayList<>();
+    // utilisateurs.add(retour);
+    // data.setData(utilisateurs);
+    // } catch (Exception e) {
+    // status = 500;
+    // message = "Error d'acces base de donnee detecter";
+    // Erreur __error = new Erreur(status, message);
+    // error.add(__error);
+    // data.setData(error);
+    // }
+    // __data.add(data);
+    // return __data;
+    // }
 }

@@ -12,8 +12,9 @@ import java.util.ArrayList;
 public class CategorieLePlusVenduRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
     public ArrayList<CategorieLePlusVendu> SelectAllCategorie() {
-        String sql = "SELECT*from TOP5_CATEGORIEPRODUIT";
+        String sql = "SELECT*from TOP5_CATEGORIEPRODUIT ORDER BY nbr DESC";
         return (ArrayList<CategorieLePlusVendu>) jdbcTemplate.query(sql,
                 new BeanPropertyRowMapper<CategorieLePlusVendu>(CategorieLePlusVendu.class));
     }
