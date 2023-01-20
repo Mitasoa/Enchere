@@ -33,7 +33,6 @@ public class MobileController {
 
     private Data data = new Data();
     ArrayList error = new ArrayList<>();
-    ArrayList<Data> __data = new ArrayList<>();
     String message;
     int status;
 
@@ -41,6 +40,7 @@ public class MobileController {
     @ResponseBody
     @CrossOrigin
     public ArrayList<Data> DemandeRechargement(HttpServletRequest request) {
+        ArrayList<Data> __data = new ArrayList<>();
         Demande demande = new Demande();
         if (request.getParameter("idUtilisateur") != null && request.getParameter("montant") != null) {
             try {
@@ -75,6 +75,7 @@ public class MobileController {
     @ResponseBody
     @CrossOrigin
     public ArrayList<Data> getEnchere(@PathVariable(value = "idUtilisateur") int idUtilisateur) {
+        ArrayList<Data> __data = new ArrayList<>();
         try {
             ArrayList<Produit> mesEncheres = mobileRep.getEnchere(idUtilisateur);
             data.setData(mesEncheres);
@@ -93,6 +94,7 @@ public class MobileController {
     @ResponseBody
     @CrossOrigin
     public ArrayList<Data> inscription(HttpServletRequest request) {
+        ArrayList<Data> __data = new ArrayList<>();
         Utilisateur user = new Utilisateur();
         if (request.getParameter("nom") != null && request.getParameter("prenom") != null
                 && request.getParameter("mail") != null && request.getParameter("motdepasse") != null) {
@@ -130,6 +132,7 @@ public class MobileController {
     @ResponseBody
     @CrossOrigin
     public ArrayList<Data> connecter(HttpServletRequest request) {
+        ArrayList<Data> __data = new ArrayList<>();
         Utilisateur user = new Utilisateur();
         if (request.getParameter("mail") != null && request.getParameter("motdepasse") != null) {
             try {
