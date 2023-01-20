@@ -38,18 +38,18 @@ public class ProduitRepository {
         if (tab.size() == 0) {
             return true;
         } else {
-            throw new Exception("Failed Encheriser");
+            throw new Exception("C'est votre propre enchere");
         }
     }
 
     public boolean TESTMONTANT(int id, double montant) throws Exception {//// TESTER === TRUE
-        String sql = "SELECT * FROM Produit where prix>? and id=?";
+        String sql = "SELECT * FROM Produit where prix>=? and id=?";
         ArrayList<Produit> tab = (ArrayList<Produit>) jdbcTemplate.query(sql,
                 new BeanPropertyRowMapper<Produit>(Produit.class), montant, id);
         if (tab.size() == 0) {
             return true;
         } else {
-            throw new Exception(id + "<==tab" + tab.size() + "===" + montant);
+            throw new Exception("MOntant inferieur au dernier montant");
         }
     }
 
@@ -73,7 +73,7 @@ public class ProduitRepository {
             etatsolde.setSituation("Succes");
         } else {
             etatsolde.setSituation("Solde Insuffisant==>" + histo.size());
-            throw new Exception("Solde Insuffisant==>" + histo.size());
+            throw new Exception("Solde Insuffisant : votre solde" + montant);
         }
 
         return etatsolde;
@@ -94,7 +94,9 @@ public class ProduitRepository {
             histoREP.InsertHistorique(utilHisto);
 
         } catch (Exception ex) {
-            throw ex;
+            etatsolde.setSituation(ex.getMessage());
+            return etatsolde;
+            // throw ex;
         }
 
         return etatsolde;
@@ -106,6 +108,17 @@ public class ProduitRepository {
                 new BeanPropertyRowMapper<Produit>(Produit.class), prod.getNom(), prod.getPrix(),
                 prod.getUtilisateurid(), prod.getCategorieid(),
                 prod.getDuree());
+
+        if (produit != null) {
+            return produit.get(0);
+        }
+        return new Produit();
+    }
+
+    public Produit getById(int idprod) {
+        String sql2 = "select id from produit where id=?";
+        ArrayList<Produit> produit = (ArrayList<Produit>) jdbcTemplate.query(sql2,
+                new BeanPropertyRowMapper<Produit>(Produit.class), idprod);
 
         if (produit != null) {
             return produit.get(0);

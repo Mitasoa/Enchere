@@ -72,6 +72,7 @@ public class FrontOfficeController {
     ProduitRepository rep;
 
     private Data data = new Data();
+    ///// https://enchere-production.up.railway.app
 
     @ResponseBody
     @RequestMapping(value = "/FicheEncheres", method = RequestMethod.GET, produces = "application/json")
@@ -183,11 +184,14 @@ public class FrontOfficeController {
 
     @RequestMapping(value = "/Encherir/{prix}&&{produitid}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public ArrayList<Data> Enherire(@RequestHeader String token,
+    public ArrayList<Data> Enherire(@RequestHeader(value = "token") String token,
             @PathVariable(value = "prix") double prix, @PathVariable(value = "produitid") int produitid) {
         Token tok = new Token().ToToken(token);
-        HistoriqueUtilisateur historique = HistoREP.getDernierHistorique(produitid);
+        Produit produit = ProdREP.getById(produitid);
+        HistoriqueUtilisateur historique = null;
+        historique = HistoREP.getDernierHistorique(produitid);
         historique.setPrix(prix);
+        historique.setUtilisateuridvendeur(produit.getId());
         System.out.print(produitid + "===TESTYUIOP" + prix);
         historique.setProduitid(produitid);
 

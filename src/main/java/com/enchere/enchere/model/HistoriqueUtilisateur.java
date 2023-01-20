@@ -15,10 +15,6 @@ public class HistoriqueUtilisateur {
     // id | nom | prix | utilisateuridvendeur | utilisateuridacheteur | categorieid
     // | dateencheriser | duree
 
-    @Id
-    private ObjectId _id;
-
-    int id;
     String nom;
     double prix;
     int utilisateuridvendeur;
@@ -58,13 +54,13 @@ public class HistoriqueUtilisateur {
         this.duree = duree;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    // public void setId(int id) {
+    // this.id = id;
+    // }
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
+    // public void setNom(String nom) {
+    // this.nom = nom;
+    // }
 
     public void setPrix(double prix) {
         this.prix = prix;
@@ -88,10 +84,6 @@ public class HistoriqueUtilisateur {
 
     public String getDuree() {
         return duree;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getNom() {
