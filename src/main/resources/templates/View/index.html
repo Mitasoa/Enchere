@@ -122,7 +122,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/Statistique}"><i
+                        <a onclick="stat()" class="nav-link" th:href="@{/Statistique}"><i
                                 class="icon-bar-graph menu-icon"></i><span class="menu-title">Statistiques</span></a>
                     </li>
                     <li class="nav-item">
@@ -167,6 +167,12 @@
         </div>
         <!-- page-body-wrapper ends -->
     </div>
+    <script>
+        function stat(){
+            Statistique();
+            Statistique1();
+        }
+    </script>
     <script src="vendors/js/vendor.bundle.base.js"></script>
     <script src="js/off-canvas.js"></script>
     <script src="js/hoverable-collapse.js"></script>
