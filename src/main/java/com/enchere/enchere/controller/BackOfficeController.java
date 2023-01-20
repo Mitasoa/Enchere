@@ -118,7 +118,7 @@ public class BackOfficeController {
         if(request.getParameter("taux") != null){
             try {
                 backRep.insertTaux(Float.parseFloat(request.getParameter("taux")));
-                model.addAttribute("success", "Taux ajouter avec succès");*
+                model.addAttribute("success", "Taux ajouter avec succès");
             }catch (Exception e) {
                 e.printStackTrace();
                 model.addAttribute("error", "Une erreur s'est produite !");
