@@ -1,5 +1,5 @@
 
-var lien = "http://localhost:9000/";
+var lien = "https://enchere-production.up.railway.app/";
 var labelTOP5Categories = [];
 var valueTOP5Categories = [];
 var labelTOP5CategoriesRentable = [];
