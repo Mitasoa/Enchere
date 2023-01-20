@@ -58,9 +58,9 @@ public class HistoriqueUtilisateur {
     // this.id = id;
     // }
 
-    // public void setNom(String nom) {
-    // this.nom = nom;
-    // }
+    public void setNom(String nom) {
+    this.nom = nom;
+    }
 
     public void setPrix(double prix) {
         this.prix = prix;

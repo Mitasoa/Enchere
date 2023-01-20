@@ -3,6 +3,7 @@ package com.enchere.enchere.controller;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.sql.*;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -187,11 +188,16 @@ public class FrontOfficeController {
     public ArrayList<Data> Enherire(@RequestHeader(value = "token") String token,
             @PathVariable(value = "prix") double prix, @PathVariable(value = "produitid") int produitid) {
         Token tok = new Token().ToToken(token);
+        long date = System.currentTimeMillis();
+        Date dt = new Date(date);
         Produit produit = ProdREP.getById(produitid);
         HistoriqueUtilisateur historique = null;
         historique = HistoREP.getDernierHistorique(produitid);
         historique.setPrix(prix);
+        historique.setNom(produit.getNom());
+        historique.setDuree(produit.getDuree().toString());
         historique.setUtilisateuridvendeur(produit.getId());
+        historique.setDateencheriser(dt.toString());
         System.out.print(produitid + "===TESTYUIOP" + prix);
         historique.setProduitid(produitid);
 
@@ -233,6 +239,7 @@ public class FrontOfficeController {
         Token token = new Token().ToToken(tok);
         ArrayList<Data> __data = new ArrayList<>();
         Produit produit = new Produit();
+
         produit.setNom(request.getParameter("nom"));
         produit.setUtilisateurid(token.getUtilisateur());
         produit.setCategorieid(Integer.parseInt(request.getParameter("categorieid")));
@@ -249,6 +256,12 @@ public class FrontOfficeController {
         data.setData(ReturnProduit);
         __data.add(data);
         return __data;
+    }
+
+    @RequestMapping(value = "/historiques", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public List<HistoriqueUtilisateur> getHistoriques() {
+        return HistoREP.getHistoriqueAll();
     }
 
 }

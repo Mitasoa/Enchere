@@ -69,4 +69,10 @@ public class HistoriqueRepository {
         return array;
     }
 
+    public List<HistoriqueUtilisateur> getHistoriqueAll() {
+        Query query = new Query();
+
+        return mongoTemplate.find(query, HistoriqueUtilisateur.class);
+    }
+
 }
