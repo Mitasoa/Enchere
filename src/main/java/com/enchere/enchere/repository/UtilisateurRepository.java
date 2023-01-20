@@ -1,20 +1,45 @@
 package com.enchere.enchere.repository;
 
-import com.enchere.enchere.DAO.UtilisateurDAO;
-import com.enchere.enchere.model.Utilisateur;
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.enchere.enchere.model.Token;
+import com.enchere.enchere.model.Utilisateur;
+
 @Repository
-public class UtilisateurRepository implements UtilisateurDAO {
+public class UtilisateurRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @Override
-    public void insertUtilisateur(Utilisateur utilisateur) {
-        String sql = "INSERT INTO utilisateur VALUES(DEFAULT,?,?,?,?)";
-        jdbcTemplate.update(sql, utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getMail(),
-                utilisateur.getMotDePasse());
+    // /*public Utilisateur Login(String mail, String pwd) {
+
+    // }*/
+
+    public Token Login(Utilisateur login) {
+        Token tokenVR = null;
+        String sql = "select * from utilisateur where mail=? and motdepasse=?";
+        ArrayList<Utilisateur> result = (ArrayList<Utilisateur>) jdbcTemplate.query(sql,
+                new BeanPropertyRowMapper<Utilisateur>(Utilisateur.class), login.getMail(), login.getMotdepass());
+        int idutil = 0;
+        if (result.size() > 0) {
+            idutil = result.get(0).getId();
+        }
+        if (idutil != 0) {
+            tokenVR = new Token().ReturnToken(idutil);
+        }
+        return tokenVR;
+    }
+
+    public Utilisateur getOneUtilisateur(int id) {
+        String sql = "select * from utilisateur where id=?";
+        System.out.print("idPRUIL ===> " + id);
+        ArrayList<Utilisateur> result = (ArrayList<Utilisateur>) jdbcTemplate.query(sql,
+                new BeanPropertyRowMapper<Utilisateur>(Utilisateur.class), id);
+        System.out.println("RESULT" + result.get(0).getSolde());
+        return result.get(0);
     }
 }

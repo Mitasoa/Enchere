@@ -12,6 +12,7 @@ public class Produit {
     String nom;
     int utilisateurid;
     int categorieid;
+    String categorie;
     LocalDateTime dateencheriser;
     LocalTime duree;
     int etat;
@@ -90,5 +91,14 @@ public class Produit {
     public int getUtilisateurid() {
         return utilisateurid;
     }
+
+    public String getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(String categorie) {
+        this.categorie = categorie;
+    }
+
 
 }

@@ -20,7 +20,7 @@ public class MobileRepository {
     public void inscrire(Utilisateur utilisateur) {
         String sql = "INSERT INTO Utilisateur VALUES (DEFAULT,?,?,?,?,?)";
         jdbcTemplate.update(sql, utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getMail(),
-                utilisateur.getMotDePasse(), 0);
+                utilisateur.getMotdepass(), 0);
     }
 
     public ArrayList<Produit> getEnchere(int id) {
@@ -35,12 +35,12 @@ public class MobileRepository {
 
     public void addProduit(Produit produit) {
         String sql = "INSERT INTO Produit VALUES (DEFAULT,?,?,?," + produit.getCategorie() + ",DEFAULT,?,DEFAULT)";
-        jdbcTemplate.update(sql, produit.getNom(), produit.getPrix(), produit.getUtilisateurId(), produit.getDuree());
+        jdbcTemplate.update(sql, produit.getNom(), produit.getPrix(), produit.getUtilisateurid(), produit.getDuree());
     }
 
     public ArrayList<Utilisateur> connecter(Utilisateur user) {
         String sql = "SELECT * FROM Utilisateur WHERE mail=? AND motdepasse=?";
         return (ArrayList<Utilisateur>) jdbcTemplate.query(sql,
-                new BeanPropertyRowMapper<Utilisateur>(Utilisateur.class), user.getMail(), user.getMotDePasse());
+                new BeanPropertyRowMapper<Utilisateur>(Utilisateur.class), user.getMail(), user.getMotdepass());
     }
 }

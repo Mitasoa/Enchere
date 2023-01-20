@@ -110,11 +110,11 @@ public class MobileController {
                 user.setNom(request.getParameter("nom"));
                 user.setPrenom(request.getParameter("prenom"));
                 user.setMail(request.getParameter("mail"));
-                user.setMotDePasse(request.getParameter("motdepasse"));
+                user.setMotdepass(request.getParameter("motdepasse"));
                 user.setId(0);
                 user.setSolde(0);
                 mobileRep.inscrire(user);
-                user.setMotDePasse("*");
+                user.setMotdepass("*");
                 ArrayList __user = new ArrayList<>();
                 __user.add(user);
                 data.setData(__user);
@@ -147,7 +147,7 @@ public class MobileController {
         if (request.getParameter("mail") != null && request.getParameter("motdepasse") != null) {
             try {
                 user.setMail(request.getParameter("mail"));
-                user.setMotDePasse(request.getParameter("motdepasse"));
+                user.setMotdepass(request.getParameter("motdepasse"));
                 mobileRep.connecter(user);
                 ArrayList<Utilisateur> __user = mobileRep.connecter(user);
                 data.setData(__user);
