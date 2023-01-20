@@ -53,6 +53,10 @@ public class Utilisateur {
         this.prenom = prenom;
     }
 
+    public String getPrenom() {
+        return prenom;
+    }
+
     public Utilisateur Login(String mail, String password) {
         Utilisateur utilisateur = new Utilisateur();
         utilisateur.setMail(mail);

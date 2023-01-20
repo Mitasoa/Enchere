@@ -200,6 +200,7 @@ public class FrontOfficeController {
         historique.setDateencheriser(dt.toString());
         System.out.print(produitid + "===TESTYUIOP" + prix);
         historique.setProduitid(produitid);
+        // historique.set
 
         historique.setUtilisateuridacheteur(tok.getUtilisateur());
         EtatSolde solde = null;

@@ -1,18 +1,35 @@
 package com.enchere.enchere.model;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-import com.mongodb.internal.connection.Time;
-
-public class Produit {
+public class Produit1 {
     int id;
     String nom;
     int utilisateurid;
     int categorieid;
     LocalDateTime dateencheriser;
     LocalTime duree;
+    String produit;
+
+    public String getProduit() {
+        return produit;
+    }
+
+    public void setProduit(String produit) {
+        this.produit = produit;
+    }
+
+    String categorie;
+
+    public String getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(String categorie) {
+        this.categorie = categorie;
+    }
+
     int etat;
     double prix;
 
