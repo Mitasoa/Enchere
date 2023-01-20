@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
 import com.enchere.enchere.model.Demande;
 import com.enchere.enchere.model.Produit;
+import com.enchere.enchere.model.Produit1;
 import com.enchere.enchere.model.Utilisateur;
 
 @Repository
@@ -34,8 +35,9 @@ public class MobileRepository {
     }
 
     public void addProduit(Produit produit) {
-        String sql = "INSERT INTO Produit VALUES (DEFAULT,?,?,?," + produit.getCategorie() + ",DEFAULT,?,DEFAULT)";
-        jdbcTemplate.update(sql, produit.getNom(), produit.getPrix(), produit.getUtilisateurid(), produit.getDuree());
+        String sql = "INSERT INTO Produit VALUES (DEFAULT,?,?,?,?,DEFAULT,?,DEFAULT)";
+        jdbcTemplate.update(sql, produit.getNom(), produit.getPrix(), produit.getUtilisateurid(),
+                produit.getCategorieid(), produit.getDuree());
     }
 
     public ArrayList<Utilisateur> connecter(Utilisateur user) {
