@@ -116,7 +116,7 @@ public class ProduitRepository {
     }
 
     public Produit getById(int idprod) {
-        String sql2 = "select id from produit where id=?";
+        String sql2 = "select * from produit where id=?";
         ArrayList<Produit> produit = (ArrayList<Produit>) jdbcTemplate.query(sql2,
                 new BeanPropertyRowMapper<Produit>(Produit.class), idprod);
 
