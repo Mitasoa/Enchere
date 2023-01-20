@@ -27,7 +27,7 @@ public class FrontOfficerepository {
         if (motCle == null) {
             motCle = "";
         }
-        String sql = "SELECT * FROM enchere WHERE 1=1 ";
+        String sql = "SELECT * FROM ficheencheres WHERE 1=1 ";
         if (fiche.getPrix() > 0) {
             sql += " AND prix=" + fiche.getPrix() + " ";
         }

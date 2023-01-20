@@ -43,7 +43,7 @@ public class ProduitRepository {
     }
 
     public boolean TESTMONTANT(int id, double montant) throws Exception {//// TESTER === TRUE
-        String sql = "SELECT * FROM Produit where prix>=? and id=?";
+        String sql = "SELECT * FROM Produit where prix>=? and id=? and etat=0";
         ArrayList<Produit> tab = (ArrayList<Produit>) jdbcTemplate.query(sql,
                 new BeanPropertyRowMapper<Produit>(Produit.class), montant, id);
         if (tab.size() == 0) {
@@ -73,7 +73,7 @@ public class ProduitRepository {
             etatsolde.setSituation("Succes");
         } else {
             etatsolde.setSituation("Solde Insuffisant==>" + histo.size());
-            throw new Exception("Solde Insuffisant : votre solde" + montant);
+            throw new Exception("Solde Insuffisant : votre solde est " + utili.getSolde());
         }
 
         return etatsolde;
@@ -128,7 +128,7 @@ public class ProduitRepository {
 
     public int InsertProduit(Produit prod) {
 
-        String sql = "insert into produit(nom,prix,utilisateurid,categorieid,duree)values(?,?,?,?,?)";
+        String sql = "insert into produit(nom,prix,utilisateurid,categorieid,duree,dateEncheriser)values(?,?,?,?,?,CURRENT_TIMESTAMP)";
         // String sql2 = "select id from produit where nom=? abd prix=? and
         // utilisateurid=? and categorieid=? and duree";
         // nom | prix | utilisateurid | categorieid | dateencheriser | duree | etat

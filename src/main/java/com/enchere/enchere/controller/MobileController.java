@@ -150,7 +150,15 @@ public class MobileController {
                 user.setMotdepass(request.getParameter("motdepasse"));
                 mobileRep.connecter(user);
                 ArrayList<Utilisateur> __user = mobileRep.connecter(user);
+                user.setMotdepass("*");
                 data.setData(__user);
+                if (__user.size() == 0) {
+                    status = 501;
+                    message = "Mot de passe incorrect";
+                    Erreur __error = new Erreur(status, message);
+                    error.add(__error);
+                    data.setData(error);
+                }
             } catch (Exception e) {
                 status = 500;
                 message = "Une erreur s'est produite : " + e;

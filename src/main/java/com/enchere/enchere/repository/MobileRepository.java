@@ -35,9 +35,9 @@ public class MobileRepository {
     }
 
     public void addProduit(Produit produit) {
-        String sql = "INSERT INTO Produit VALUES (DEFAULT,?,?,?,?,DEFAULT,?,DEFAULT)";
+        String sql = "INSERT INTO Produit VALUES (DEFAULT,?,?,?,?,?,?,DEFAULT)";
         jdbcTemplate.update(sql, produit.getNom(), produit.getPrix(), produit.getUtilisateurid(),
-                produit.getCategorieid(), produit.getDuree());
+                produit.getCategorieid(), produit.getDateencheriser(), produit.getDuree());
     }
 
     public ArrayList<Utilisateur> connecter(Utilisateur user) {
