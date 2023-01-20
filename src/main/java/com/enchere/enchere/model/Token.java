@@ -16,7 +16,7 @@ import io.jsonwebtoken.Claims;
  * @author tsotsoa
  */
 public class Token {
-    public static final long DateEXP = 100000;
+    public static final long DateEXP = 100000000;
     public static final String keyToken = "Token22";
 
     int id;
@@ -83,6 +83,16 @@ public class Token {
         Claims cl = Jwts.parser().setSigningKey(Token.keyToken)
                 .parseClaimsJws(token).getBody();
         return cl.getExpiration();
+    }
+
+    public Token ToToken(String tok) {
+        Token token = new Token();
+        Claims cl = Jwts.parser().setSigningKey(Token.keyToken)
+                .parseClaimsJws(tok).getBody();
+        int idutilisateur = Integer.parseInt(cl.get("idutilisateur").toString());
+        token.setUtilisateur(idutilisateur);
+        token.setToken(tok);
+        return token;
     }
 
 }

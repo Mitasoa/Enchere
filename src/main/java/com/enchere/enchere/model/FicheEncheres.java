@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.data.domain.Sort;
 
 import com.enchere.enchere.DAO.PhotoDAO;
+import com.enchere.enchere.repository.PhotoProduit;
 
 public class FicheEncheres {
     int id;
@@ -16,7 +17,7 @@ public class FicheEncheres {
     String produit;
     LocalDateTime datefin;
     String status;
-    List<Photo> sary;
+    ArrayList<Photo> sary;
 
     public void setId(int id) {
         this.id = id;
@@ -26,11 +27,11 @@ public class FicheEncheres {
         return id;
     }
 
-    public void setSary(List<Photo> sary) {
+    public void setSary(ArrayList<Photo> sary) {
         this.sary = sary;
     }
 
-    public List<Photo> getSary() {
+    public ArrayList<Photo> getSary() {
         return sary;
     }
 
@@ -74,11 +75,11 @@ public class FicheEncheres {
         return status;
     }
 
-    public void SetImage(ArrayList<FicheEncheres> fiche, PhotoDAO DAO) {
+    public void SetImage(ArrayList<FicheEncheres> fiche, PhotoProduit DAO) {
         for (int i = 0; i < fiche.size(); i++) {
             // DAO.findAll();
             // DAO.
-            fiche.get(i).setSary(DAO.findAll());//// Integer.toString(fiche.get(i).getId())Sort.by({"id":fiche.get(i)})
+            fiche.get(i).setSary(DAO.GetPhoto(fiche.get(i).getId()));//// Integer.toString(fiche.get(i).getId())Sort.by({"id":fiche.get(i)})
         }
     }
 

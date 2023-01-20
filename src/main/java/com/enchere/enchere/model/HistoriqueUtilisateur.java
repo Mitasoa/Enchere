@@ -1,6 +1,7 @@
 package com.enchere.enchere.model;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import javax.xml.namespace.QName;
@@ -23,7 +24,7 @@ public class HistoriqueUtilisateur {
     int utilisateuridvendeur;
     int utilisateuridacheteur;
     int categorieid;
-    Date dateencheriser;
+    String dateencheriser;
     String duree;
     int etatActuelle;
     int produitid;
@@ -48,7 +49,8 @@ public class HistoriqueUtilisateur {
         this.categorieid = categorieid;
     }
 
-    public void setDateencheriser(Date dateencheriser) {
+    public void setDateencheriser(String dateencheriser) {
+        // this.dateencheriser = LocalDateTime.parse(dateencheriser.replace(" ", "T"));
         this.dateencheriser = dateencheriser;
     }
 
@@ -80,7 +82,7 @@ public class HistoriqueUtilisateur {
         return categorieid;
     }
 
-    public Date getDateencheriser() {
+    public String getDateencheriser() {
         return dateencheriser;
     }
 

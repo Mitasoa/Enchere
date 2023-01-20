@@ -36,8 +36,10 @@ public class UtilisateurRepository {
 
     public Utilisateur getOneUtilisateur(int id) {
         String sql = "select * from utilisateur where id=?";
+        System.out.print("idPRUIL ===> " + id);
         ArrayList<Utilisateur> result = (ArrayList<Utilisateur>) jdbcTemplate.query(sql,
                 new BeanPropertyRowMapper<Utilisateur>(Utilisateur.class), id);
+        System.out.println("RESULT" + result.get(0).getSolde());
         return result.get(0);
     }
 }

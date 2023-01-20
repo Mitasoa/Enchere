@@ -6,10 +6,8 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "Photo")
+// @Document(collection = "Photo")
 public class Photo {
-    @Id
-    private ObjectId _id;
 
     int id;
     String sary;
@@ -40,5 +38,4 @@ public class Photo {
         return idproduit;
     }
 
-   
 }

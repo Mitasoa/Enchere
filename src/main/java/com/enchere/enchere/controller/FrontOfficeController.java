@@ -1,38 +1,45 @@
 package com.enchere.enchere.controller;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.gson.GsonBuilderCustomizer;
+import org.springframework.boot.json.GsonJsonParser;
+import org.springframework.boot.json.JsonParser;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.http.HttpRequest;
+import org.springframework.data.mongodb.core.geo.GeoJson;
+import org.springframework.data.util.ProxyUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.enchere.enchere.DAO.HistoriqueDAO;
-import com.enchere.enchere.DAO.PhotoDAO;
-import com.enchere.enchere.model.Admin;
 import com.enchere.enchere.model.Data;
+import com.enchere.enchere.model.EtatSolde;
 import com.enchere.enchere.model.FicheEncheres;
+import com.enchere.enchere.model.HistoriqueUtilisateur;
 import com.enchere.enchere.model.Photo;
-import com.enchere.enchere.repository.BackOfficeRepository;
+import com.enchere.enchere.model.Produit;
+import com.enchere.enchere.model.Token;
+import com.enchere.enchere.model.Utilisateur;
 import com.enchere.enchere.repository.FrontOfficerepository;
-import com.enchere.enchere.repository.LoginRepository;
+import com.enchere.enchere.repository.HistoriqueRepository;
 import com.enchere.enchere.repository.PhotoProduit;
+import com.enchere.enchere.repository.ProduitRepository;
 import com.enchere.enchere.repository.UtilisateurRepository;
-import com.enchere.enchere.model.*;
-import org.springframework.web.bind.annotation.RequestParam;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class FrontOfficeController {
@@ -40,11 +47,11 @@ public class FrontOfficeController {
     @Autowired
     FrontOfficerepository repOFF;
 
-    // @Autowired
-    // PhotoProduit photoREP;
+    @Autowired
+    ProduitRepository ProdREP;
 
     @Autowired
-    PhotoDAO photo;
+    PhotoProduit photo;
 
     @Autowired
     HistoriqueDAO histo;
@@ -54,6 +61,15 @@ public class FrontOfficeController {
 
     @Autowired
     private MongoTemplate mongoTemplate;
+
+    @Autowired
+    private HistoriqueRepository HistoREP;
+    /*
+     * @Autowired
+     * ProduitRepository prodREP;
+     */
+    @Autowired
+    ProduitRepository rep;
 
     private Data data = new Data();
 
@@ -109,26 +125,126 @@ public class FrontOfficeController {
 
     }
 
-    @RequestMapping(value = "/photo", method = RequestMethod.GET, produces = "application/json")
+    /*
+     * @RequestMapping(value = "/photo", method = RequestMethod.GET, produces =
+     * "application/json")
+     * 
+     * @ResponseBody
+     * public Optional<Photo> getPhoto() {
+     * // photo.
+     * return photo.findById("{id:" + 1 + "}");
+     * }
+     */
+
+    /*
+     * @RequestMapping(value = "/histo/{nom}", method = RequestMethod.GET, produces
+     * = "application/json")
+     * 
+     * @ResponseBody
+     * public List<HistoriqueUtilisateur> Histo(@PathVariable(value = "nom") String
+     * param) {
+     * // return histo.findAll();
+     * // Query query = new Query();
+     * // query.addCriteria(Criteria.where("nom").is(param).where("prix").is(0));
+     * // return mongoTemplate.find(query, HistoriqueUtilisateur.class);
+     * Query query = new Query();
+     * query.addCriteria(Criteria.where("etatActuelle").is(1).where("produitid").is(
+     * 2)
+     * .where("utilisateuridacheteur").is(4));
+     * return mongoTemplate.find(query, HistoriqueUtilisateur.class);
+     * }
+     * 
+     * @RequestMapping(value = "/TEST/{nom}", method = RequestMethod.GET, produces =
+     * "application/json")
+     * 
+     * @ResponseBody
+     * public EtatSolde TEST(@PathVariable(value = "nom") String param) {
+     * // HistoriqueUtilisateur
+     * /// ProduitRepository rep = new ProduitRepository();
+     * HistoriqueUtilisateur historique = new HistoriqueUtilisateur();
+     * EtatSolde sl = new EtatSolde();
+     * try {
+     * sl = rep.TestBlocked(1, 2, 4, 200400);
+     * historique = HistoREP.getDernierHistorique(2);
+     * sl = rep.FaireEncherir(historique);
+     * return sl;
+     * } catch (Exception e) {
+     * // TODO Auto-generated catch block
+     * sl.setSituation(e.toString());
+     * // System.out.print(ex)
+     * e.printStackTrace();
+     * // return sl;
+     * // e.printStackTrace();
+     * }
+     * return sl;
+     * // return "success";
+     * }
+     */
+
+    @RequestMapping(value = "/Encherir/{prix}&&{produitid}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public Optional<Photo> getPhoto() {
-        // photo.
-        return photo.findById("{id:" + 1 + "}");
+    public ArrayList<Data> Enherire(@RequestHeader String token,
+            @PathVariable(value = "prix") double prix, @PathVariable(value = "produitid") int produitid) {
+        Token tok = new Token().ToToken(token);
+        HistoriqueUtilisateur historique = HistoREP.getDernierHistorique(produitid);
+        historique.setPrix(prix);
+        System.out.print(produitid + "===TESTYUIOP" + prix);
+        historique.setProduitid(produitid);
+
+        historique.setUtilisateuridacheteur(tok.getUtilisateur());
+        EtatSolde solde = null;
+        try {
+            solde = rep.FaireEncherir(historique);
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
+        }
+
+        ArrayList<EtatSolde> etatSolde = new ArrayList<>();
+        etatSolde.add(solde);
+        ArrayList<Data> __data = new ArrayList<>();
+        data.setData(etatSolde);
+        __data.add(data);
+        return __data;
     }
 
-    @RequestMapping(value = "/histo/{nom}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/historiques/{idutilisateur}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public List<HistoriqueUtilisateur> Histo(@PathVariable(value = "nom") String param) {
-        // return histo.findAll();
-        Query query = new Query();
-        query.addCriteria(Criteria.where("nom").is(param));
-        return mongoTemplate.find(query, HistoriqueUtilisateur.class);
+    public ArrayList<Data> getHistorique(@RequestHeader(value = "token") String tok,
+            @PathVariable(value = "idutilisateur") int idutilisateur) {
+        Token token = new Token().ToToken(tok);
+        List<HistoriqueUtilisateur> historique = HistoREP.getHistoriqueByUtil(token.getUtilisateur());
+
+        ArrayList<HistoriqueUtilisateur> tab = HistoREP.ToArrayList(historique);
+        ArrayList<Data> __data = new ArrayList<>();
+        data.setData(tab);
+        __data.add(data);
+        return __data;
     }
 
-    @RequestMapping(value = "/TEST/{nom}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/Encheres", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
-    public String TEST(@PathVariable(value = "nom") String param) {
-        return param;
+    public ArrayList<Data> CreateEnchere(@RequestHeader(value = "token") String tok, @RequestBody String body,
+            HttpServletRequest request) {
+        Token token = new Token().ToToken(tok);
+        ArrayList<Data> __data = new ArrayList<>();
+        Produit produit = new Produit();
+        produit.setNom(request.getParameter("nom"));
+        produit.setUtilisateurid(token.getUtilisateur());
+        produit.setCategorieid(Integer.parseInt(request.getParameter("categorieid")));
+        produit.setDateencheriser(LocalDateTime.now());
+        produit.setDuree(LocalTime.parse(request.getParameter("duree")));
+        produit.setPrix(Double.parseDouble(request.getParameter("prix")));
+        // produit.setDateencheriser(new);
+        int idprod = ProdREP.InsertProduit(produit);
+        Photo[] sary = photo.ToPhoto(idprod, body);
+        String mess = photo.InsertPhoto(sary);
+        produit.setPhoto(sary);
+        ArrayList<Produit> ReturnProduit = new ArrayList<>();
+        ReturnProduit.add(produit);
+        data.setData(ReturnProduit);
+        __data.add(data);
+        return __data;
     }
 
 }

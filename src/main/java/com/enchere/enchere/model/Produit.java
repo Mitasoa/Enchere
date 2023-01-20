@@ -1,6 +1,7 @@
 package com.enchere.enchere.model;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import com.mongodb.internal.connection.Time;
@@ -11,15 +12,34 @@ public class Produit {
     String nom;
     int utilisateurid;
     int categorieid;
-    Date dateencheriser;
+    LocalDateTime dateencheriser;
     LocalTime duree;
     int etat;
+    double prix;
+
+    Photo[] photo;
+
+    public void setPhoto(Photo[] photo) {
+        this.photo = photo;
+    }
+
+    public Photo[] getPhoto() {
+        return photo;
+    }
+
+    public void setPrix(double prix) {
+        this.prix = prix;
+    }
+
+    public double getPrix() {
+        return prix;
+    }
 
     public void setCategorieid(int categorieid) {
         this.categorieid = categorieid;
     }
 
-    public void setDateencheriser(Date dateencheriser) {
+    public void setDateencheriser(LocalDateTime dateencheriser) {
         this.dateencheriser = dateencheriser;
     }
 
@@ -47,7 +67,7 @@ public class Produit {
         return categorieid;
     }
 
-    public Date getDateencheriser() {
+    public LocalDateTime getDateencheriser() {
         return dateencheriser;
     }
 
