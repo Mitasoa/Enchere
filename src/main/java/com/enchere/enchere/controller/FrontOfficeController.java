@@ -237,10 +237,9 @@ public class FrontOfficeController {
 
     @RequestMapping(value = "/historiques/{idutilisateur}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public ArrayList<Data> getHistorique(@RequestHeader(value = "token") String tok,
-            @PathVariable(value = "idutilisateur") int idutilisateur) {
-        Token token = new Token().ToToken(tok);
-        List<HistoriqueUtilisateur> historique = HistoREP.getHistoriqueByUtil(token.getUtilisateur());
+    public ArrayList<Data> getHistorique(@PathVariable int idutilisateur) {
+        // Token token = new Token().ToToken(tok);
+        List<HistoriqueUtilisateur> historique = HistoREP.getHistoriqueByUtil(idutilisateur);
 
         ArrayList<HistoriqueUtilisateur> tab = HistoREP.ToArrayList(historique);
         ArrayList<Data> __data = new ArrayList<>();
