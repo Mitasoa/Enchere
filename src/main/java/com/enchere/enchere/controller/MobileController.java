@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import com.enchere.enchere.repository.ChiffreAffaireRepository;
 
 @Controller
 public class MobileController {
@@ -35,6 +36,9 @@ public class MobileController {
     ArrayList error = new ArrayList<>();
     String message;
     int status;
+
+    @Autowired
+    private ChiffreAffaireRepository rep;
 
     @RequestMapping(value = "/Demandes", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
@@ -59,6 +63,8 @@ public class MobileController {
                 Erreur __error = new Erreur(status, message);
                 error.add(__error);
                 data.setData(error);
+            } finally {
+                rep.execute();
             }
 
         } else {
@@ -85,6 +91,8 @@ public class MobileController {
             Erreur __error = new Erreur(status, message);
             error.add(__error);
             data.setData(error);
+        } finally {
+            rep.execute();
         }
         __data.add(data);
         return __data;
@@ -116,6 +124,8 @@ public class MobileController {
                 Erreur __error = new Erreur(status, message);
                 error.add(__error);
                 data.setData(error);
+            } finally {
+                rep.execute();
             }
 
         } else {
@@ -147,6 +157,8 @@ public class MobileController {
                 Erreur __error = new Erreur(status, message);
                 error.add(__error);
                 data.setData(error);
+            } finally {
+                rep.execute();
             }
 
         } else {

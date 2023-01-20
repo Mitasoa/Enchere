@@ -44,6 +44,7 @@ public class BackOfficeController {
         }
         model.addAttribute("content", "login");
         model.addAttribute("contentpath", "View/login");
+        rep.execute();
         return "View/login";
     }
 
@@ -72,6 +73,7 @@ public class BackOfficeController {
         model.addAttribute("allCategorie", allCategorie);
         model.addAttribute("content", "categories");
         model.addAttribute("contentpath", "View/categories");
+        rep.execute();
         return "View/index";
     }
 
@@ -96,6 +98,7 @@ public class BackOfficeController {
         model.addAttribute("allDemandeUser", allDemandeUser);
         model.addAttribute("content", "demande");
         model.addAttribute("contentpath", "View/demande");
+        rep.execute();
         return "View/index";
     }
 
@@ -109,6 +112,7 @@ public class BackOfficeController {
         model.addAttribute("annee", formatage.format(((ChiffreAffaire) annee.get(0)).getMoyenne()) + " Ariary");
         model.addAttribute("content", "statistique");
         model.addAttribute("contentpath", "View/statistique");
+        rep.execute();
         return "View/index";
     }
 
@@ -128,6 +132,7 @@ public class BackOfficeController {
         model.addAttribute("allParam", allParam);
         model.addAttribute("content", "parametrage");
         model.addAttribute("contentpath", "View/parametrage");
+        rep.execute();
         return "View/index";
     }
 }

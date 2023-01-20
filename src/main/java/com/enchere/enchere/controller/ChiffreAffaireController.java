@@ -38,6 +38,8 @@ public class ChiffreAffaireController {
             message = "Error d'acces base de donnee detecter";
             Erreur __error = new Erreur(status, message);
             error.add(__error);
+        } finally {
+            rep.execute();
         }
         __data.add(data);
         return __data;
@@ -58,6 +60,8 @@ public class ChiffreAffaireController {
             message = "Error d'acces base de donnee detecter";
             Erreur __error = new Erreur(status, message);
             error.add(__error);
+        } finally {
+            rep.execute();
         }
         __data.add(data);
         return __data;
@@ -78,6 +82,8 @@ public class ChiffreAffaireController {
             message = "Error d'acces base de donnee detecter";
             Erreur __error = new Erreur(status, message);
             error.add(__error);
+        } finally {
+            rep.execute();
         }
         __data.add(data);
         return __data;
