@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.enchere.enchere.DAO.HistoriqueDAO;
 import com.enchere.enchere.model.Data;
+import com.enchere.enchere.model.Erreur;
 import com.enchere.enchere.model.EtatSolde;
 import com.enchere.enchere.model.FicheEncheres;
 import com.enchere.enchere.model.HistoriqueUtilisateur;
@@ -65,6 +66,10 @@ public class FrontOfficeController {
 
     @Autowired
     private HistoriqueRepository HistoREP;
+
+    ArrayList error = new ArrayList<>();
+    String message;
+    int status;
     /*
      * @Autowired
      * ProduitRepository prodREP;
@@ -97,9 +102,18 @@ public class FrontOfficeController {
         Token token = logREP.Login(retour);
         ArrayList<Token> TokenRes = new ArrayList<>();
         TokenRes.add(token);
+        System.out.println(TokenRes);
         ArrayList<Data> __data = new ArrayList<>();
         data.setData(TokenRes);
+        if (token == null) {
+            status = 501;
+            message = "Mot de passe incorrect";
+            Erreur __error = new Erreur(status, message);
+            error.add(__error);
+            data.setData(error);
+        }
         __data.add(data);
+
         return __data;
     }
 
@@ -183,11 +197,12 @@ public class FrontOfficeController {
      * }
      */
 
-    @RequestMapping(value = "/Encherir/{prix}&&{produitid}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/Encherir/{prix}&&{produitid}&&{id}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public ArrayList<Data> Enherire(@RequestHeader(value = "token") String token,
-            @PathVariable(value = "prix") double prix, @PathVariable(value = "produitid") int produitid) {
-        Token tok = new Token().ToToken(token);
+    public ArrayList<Data> Enherire(@PathVariable(value = "prix") double prix,
+            @PathVariable(value = "produitid") int produitid,
+            @PathVariable(value = "id") int id) {
+        // Token tok = new Token().ToToken(token);
         long date = System.currentTimeMillis();
         Date dt = new Date(date);
         Produit produit = ProdREP.getById(produitid);
@@ -202,7 +217,7 @@ public class FrontOfficeController {
         historique.setProduitid(produitid);
         // historique.set
 
-        historique.setUtilisateuridacheteur(tok.getUtilisateur());
+        historique.setUtilisateuridacheteur(id);
         EtatSolde solde = null;
         try {
             solde = rep.FaireEncherir(historique);
