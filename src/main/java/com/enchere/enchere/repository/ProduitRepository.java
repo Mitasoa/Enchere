@@ -43,10 +43,12 @@ public class ProduitRepository {
     }
 
     public boolean TESTMONTANT(int id, double montant) throws Exception {//// TESTER === TRUE
-        String sql = "SELECT * FROM Produit where prix>=? and id=? and etat=0";
+        String sql = "SELECT * FROM Produit where prix>=? and id=? and etat=1";
         ArrayList<Produit> tab = (ArrayList<Produit>) jdbcTemplate.query(sql,
                 new BeanPropertyRowMapper<Produit>(Produit.class), montant, id);
+        System.out.println("SIZE=======>" + tab.size());
         if (tab.size() == 0) {
+            System.out.println("SIZE=======>" + tab.size());
             return true;
         } else {
             throw new Exception("MOntant inferieur au dernier montant");
@@ -85,6 +87,7 @@ public class ProduitRepository {
         try {
             Date date = new Date();
             TestClient(utilHisto.getUtilisateuridacheteur(), utilHisto.getProduitid());
+            System.out.println(utilHisto.getPrix() + "====> " + utilHisto.getProduitid());
             TESTMONTANT(utilHisto.getProduitid(), utilHisto.getPrix());
             etatsolde = TestBlocked(1, utilHisto.getProduitid(), utilHisto.getUtilisateuridacheteur(),
                     utilHisto.getPrix());
