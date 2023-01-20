@@ -210,7 +210,7 @@ public class FrontOfficeController {
         historique = HistoREP.getDernierHistorique(produitid);
         historique.setPrix(prix);
         historique.setNom(produit.getNom());
-        
+
         historique.setDuree(produit.getDuree().toString());
         historique.setUtilisateuridvendeur(produit.getId());
         historique.setDateencheriser(dt.toString());

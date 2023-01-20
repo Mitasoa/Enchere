@@ -43,7 +43,7 @@ public class ProduitRepository {
     }
 
     public boolean TESTMONTANT(int id, double montant) throws Exception {//// TESTER === TRUE
-        String sql = "SELECT * FROM Produit where prix>=? and id=? and etat=1";
+        String sql = "SELECT * FROM Produit where prix>=? and id=? and etat=0";
         ArrayList<Produit> tab = (ArrayList<Produit>) jdbcTemplate.query(sql,
                 new BeanPropertyRowMapper<Produit>(Produit.class), montant, id);
         System.out.println("SIZE=======>" + tab.size());
@@ -67,8 +67,8 @@ public class ProduitRepository {
             soldeMouv += histo.get(i).getPrix();
         }
         System.out.print(utili.getSolde() + "===Solde===soldeMouv" + soldeMouv + "IDNI==>" + histo.size());
-        double soldeUnB = utili.getSolde() - soldeMouv;
-        etatsolde.setSoldeBlocked(soldeMouv);
+        double soldeUnB = utili.getSolde() - (soldeMouv + montant);
+        etatsolde.setSoldeBlocked(soldeMouv + montant);
         etatsolde.setSolde(utili.getSolde());
         etatsolde.setSoldeUnBlocked(soldeUnB);
         if (montant < soldeUnB) {
