@@ -342,7 +342,7 @@ public class FrontOfficeController {
 
     @RequestMapping(value = "/Encheres", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
-    @CrossOrigin("https://exquisite-marigold-63df7f.netlify.app/")
+    @CrossOrigin
     public ArrayList<Data> CreateEnchere(@RequestBody String body,
             HttpServletRequest request) {
         try {
