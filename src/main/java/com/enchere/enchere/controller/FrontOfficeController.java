@@ -81,6 +81,7 @@ public class FrontOfficeController {
     ///// https://enchere-production.up.railway.app
 
     @ResponseBody
+    @CrossOrigin("https://exquisite-marigold-63df7f.netlify.app/")
     @RequestMapping(value = "/FicheEncheres", method = RequestMethod.GET, produces = "application/json")
     public ArrayList<Data> getFicheEncheres() {
         ArrayList<Data> __data = new ArrayList<>();
@@ -102,6 +103,7 @@ public class FrontOfficeController {
     }
 
     @ResponseBody
+    @CrossOrigin("https://exquisite-marigold-63df7f.netlify.app/")
     @RequestMapping(value = "/FicheEncheres/{offset}", method = RequestMethod.GET, produces = "application/json")
     public ArrayList<Data> getFicheEncheresPAGINE(@PathVariable int offset) {
         ArrayList<Data> __data = new ArrayList<>();
@@ -158,7 +160,7 @@ public class FrontOfficeController {
     }
 
     @ResponseBody
-    @CrossOrigin
+    @CrossOrigin("https://exquisite-marigold-63df7f.netlify.app/")
     @RequestMapping(value = "/FicheEncheres", method = RequestMethod.POST, produces = "application/json")
     public ArrayList<Data> rechercheAvance(HttpServletRequest request) {
         ArrayList<Data> __data = new ArrayList<>();
@@ -249,6 +251,7 @@ public class FrontOfficeController {
 
     @RequestMapping(value = "/Encherir/{prix}&&{produitid}&&{id}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
+    @CrossOrigin("https://exquisite-marigold-63df7f.netlify.app/")
     public ArrayList<Data> Enherire(@PathVariable(value = "prix") double prix,
             @PathVariable(value = "produitid") int produitid,
             @PathVariable(value = "id") int id) {
@@ -285,7 +288,7 @@ public class FrontOfficeController {
         return __data;
     }
 
-    @CrossOrigin
+    @CrossOrigin("https://exquisite-marigold-63df7f.netlify.app/")
     @ResponseBody
     @RequestMapping(value = "/HistoriqueUtilisateurs/{iduser}", method = RequestMethod.GET, produces = "application/json")
 
@@ -307,7 +310,7 @@ public class FrontOfficeController {
         return _data;
     }
 
-    @CrossOrigin
+    @CrossOrigin("https://exquisite-marigold-63df7f.netlify.app/")
     @ResponseBody
     @RequestMapping(value = "/encheresPropres/{iduser}", method = RequestMethod.GET, produces = "application/json")
     public ArrayList<Data> getHistoriquePropre(@PathVariable(value = "iduser") int id) {
@@ -329,7 +332,7 @@ public class FrontOfficeController {
         return _data;
     }
 
-    @CrossOrigin
+    @CrossOrigin("https://exquisite-marigold-63df7f.netlify.app/")
     @ResponseBody
     @RequestMapping(value = "/encheresNormes/{iduser}", method = RequestMethod.GET, produces = "application/json")
     public ArrayList<Data> getHistoriqueNorme(@PathVariable(value = "iduser") int id) {
@@ -349,7 +352,7 @@ public class FrontOfficeController {
         return _data;
     }
 
-    @CrossOrigin
+    @CrossOrigin("https://exquisite-marigold-63df7f.netlify.app/")
     @ResponseBody
     @RequestMapping(value = "/photos/{idproduit}", method = RequestMethod.GET, produces = "application/json")
     public ArrayList<Data> getPhotos(@PathVariable(value = "idproduit") int idproduit) {
@@ -368,9 +371,10 @@ public class FrontOfficeController {
         }
         return _data;
     }
+
     @RequestMapping(value = "/Encheres", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
-    @CrossOrigin
+    @CrossOrigin("https://exquisite-marigold-63df7f.netlify.app/")
     public ArrayList<Data> CreateEnchere(@RequestBody String body,
             HttpServletRequest request) {
         try {
@@ -399,10 +403,11 @@ public class FrontOfficeController {
         return null;
     }
 
-    // @RequestMapping(value = "/historiques", method = RequestMethod.GET, produces = "application/json")
+    // @RequestMapping(value = "/historiques", method = RequestMethod.GET, produces
+    // = "application/json")
     // @ResponseBody
     // public List<HistoriqueUtilisateur> getHistoriques() {
-    //     return HistoREP.getHistoriqueAll();
+    // return HistoREP.getHistoriqueAll();
     // }
 
 }
