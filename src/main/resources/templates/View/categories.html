@@ -29,13 +29,13 @@
             <tr th:each="categorie:${allCategorie}">
                 <form method="POST">
                     <td>
-                        <input style="border-color: white;" class="form-control" type="hidden" name="id"
+                        <input class="form-control" type="hidden" name="id"
                             th:value="${categorie.id}">
-                        <input style="border-color: white;" class="form-control" type="text" name="categorie"
+                        <input class="form-control" type="text" name="categorie"
                             th:value="${categorie.nom}">
                     </td>
                     <td>
-                        <input style="border-color: white;" class="form-control" type="time" name="duree"
+                        <input class="form-control" type="time" name="duree"
                             th:value="${categorie.dureeMax}">
                     </td>
                     <td>

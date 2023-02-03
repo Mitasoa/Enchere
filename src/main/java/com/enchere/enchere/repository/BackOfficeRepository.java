@@ -52,6 +52,11 @@ public class BackOfficeRepository {
         return (ArrayList<Categorie>) jdbcTemplate.query(sql, new BeanPropertyRowMapper<Categorie>(Categorie.class));
     }
 
+    public ArrayList<Categorie> verifCategorie(String nom) {
+        String sql = "SELECT * FROM Categorie WHERE nom ILIKE ?";
+        return (ArrayList<Categorie>) jdbcTemplate.query(sql, new BeanPropertyRowMapper<Categorie>(Categorie.class),nom);
+    }
+
     public ArrayList<DemandeUtilisateur> listeDemandeUser(int etat) {
         String sql = "SELECT * FROM DemandeUtilisateur WHERE etat = ?";
         return (ArrayList<DemandeUtilisateur>) jdbcTemplate.query(sql,

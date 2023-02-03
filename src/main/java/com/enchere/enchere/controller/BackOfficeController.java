@@ -64,8 +64,14 @@ public class BackOfficeController {
         if (request.getParameter("nom") != null && request.getParameter("dureeMax") != null) {
             cat.setNom(request.getParameter("nom"));
             cat.setDureeMax(LocalTime.parse((request.getParameter("dureeMax"))));
-            backRep.insertCategorie(cat);
-            model.addAttribute("succes", "Insertion effectuée !");
+            ArrayList verif = backRep.verifCategorie(request.getParameter("nom"));
+            if(verif.size() == 0){
+                backRep.insertCategorie(cat);
+                model.addAttribute("succes", "Insertion effectuée !");
+            }else {
+                model.addAttribute("error", "Catégorie existe déjà !");
+            }
+            
         }
         if (request.getParameter("categorie") != null && request.getParameter("duree") != null
                 && request.getParameter("id") != null) {
