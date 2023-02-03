@@ -14,7 +14,7 @@ public class FicheEncheres {
     int id;
     String Categorie;
     double prix;
-    String produit;
+    String nom;
     LocalDateTime datefin;
     String status;
     ArrayList<Photo> sary;
@@ -60,12 +60,12 @@ public class FicheEncheres {
         return prix;
     }
 
-    public void setProduit(String produit) {
-        this.produit = produit;
+    public void setNom(String produit) {
+        this.nom = produit;
     }
 
     public String getProduit() {
-        return produit;
+        return nom;
     }
 
     public void setDatefin(LocalDateTime datefin) {
@@ -89,7 +89,7 @@ public class FicheEncheres {
             // DAO.findAll();
             // DAO.
 
-            fiche.get(i).setSary(DAO.getPhoto());//// Integer.toString(fiche.get(i).getId())Sort.by({"id":fiche.get(i)})
+            fiche.get(i).setSary(DAO.getPhoto(this.id));//// Integer.toString(fiche.get(i).getId())Sort.by({"id":fiche.get(i)})
         }
     }
 

@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.enchere.enchere.DAO.HistoriqueDAO;
+import com.enchere.enchere.model.Categorie;
 import com.enchere.enchere.model.Data;
 import com.enchere.enchere.model.Erreur;
 import com.enchere.enchere.model.EtatSolde;
@@ -81,6 +82,7 @@ public class FrontOfficeController {
     ///// https://enchere-production.up.railway.app
 
     @ResponseBody
+    @CrossOrigin("https://exquisite-marigold-63df7f.netlify.app/")
     @RequestMapping(value = "/FicheEncheres", method = RequestMethod.GET, produces = "application/json")
     public ArrayList<Data> getFicheEncheres() {
         ArrayList<Data> __data = new ArrayList<>();
@@ -102,6 +104,7 @@ public class FrontOfficeController {
     }
 
     @ResponseBody
+    @CrossOrigin("https://exquisite-marigold-63df7f.netlify.app/")
     @RequestMapping(value = "/FicheEncheres/{offset}", method = RequestMethod.GET, produces = "application/json")
     public ArrayList<Data> getFicheEncheresPAGINE(@PathVariable int offset) {
         ArrayList<Data> __data = new ArrayList<>();
@@ -124,7 +127,7 @@ public class FrontOfficeController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
-    @CrossOrigin
+    @CrossOrigin("https://exquisite-marigold-63df7f.netlify.app/")
     public ArrayList<Data> Login(HttpServletRequest request) {
         ArrayList<Data> __data = new ArrayList<>();
         if (request.getParameter("email") != null && request.getParameter("mdp") != null) {
@@ -158,7 +161,7 @@ public class FrontOfficeController {
     }
 
     @ResponseBody
-    @CrossOrigin
+    @CrossOrigin("https://exquisite-marigold-63df7f.netlify.app/")
     @RequestMapping(value = "/FicheEncheres", method = RequestMethod.POST, produces = "application/json")
     public ArrayList<Data> rechercheAvance(HttpServletRequest request) {
         ArrayList<Data> __data = new ArrayList<>();
@@ -169,7 +172,7 @@ public class FrontOfficeController {
             }
             FicheEncheres fiche = new FicheEncheres();
             fiche.setCategorie(request.getParameter("categorie"));
-            fiche.setProduit(request.getParameter("produit"));
+            fiche.setNom(request.getParameter("produit"));
             fiche.setStatus(request.getParameter("status"));
             if (request.getParameter("dateFin") != null) {
                 fiche.setDatefin(LocalDateTime.parse(request.getParameter("dateFin")));
@@ -191,64 +194,9 @@ public class FrontOfficeController {
         return __data;
     }
 
-    /*
-     * @RequestMapping(value = "/photo", method = RequestMethod.GET, produces =
-     * "application/json")
-     * 
-     * @ResponseBody
-     * public Optional<Photo> getPhoto() {
-     * // photo.
-     * return photo.findById("{id:" + 1 + "}");
-     * }
-     */
-
-    /*
-     * @RequestMapping(value = "/histo/{nom}", method = RequestMethod.GET, produces
-     * = "application/json")
-     * 
-     * @ResponseBody
-     * public List<HistoriqueUtilisateur> Histo(@PathVariable(value = "nom") String
-     * param) {
-     * // return histo.findAll();
-     * // Query query = new Query();
-     * // query.addCriteria(Criteria.where("nom").is(param).where("prix").is(0));
-     * // return mongoTemplate.find(query, HistoriqueUtilisateur.class);
-     * Query query = new Query();
-     * query.addCriteria(Criteria.where("etatActuelle").is(1).where("produitid").is(
-     * 2)
-     * .where("utilisateuridacheteur").is(4));
-     * return mongoTemplate.find(query, HistoriqueUtilisateur.class);
-     * }
-     * 
-     * @RequestMapping(value = "/TEST/{nom}", method = RequestMethod.GET, produces =
-     * "application/json")
-     * 
-     * @ResponseBody
-     * public EtatSolde TEST(@PathVariable(value = "nom") String param) {
-     * // HistoriqueUtilisateur
-     * /// ProduitRepository rep = new ProduitRepository();
-     * HistoriqueUtilisateur historique = new HistoriqueUtilisateur();
-     * EtatSolde sl = new EtatSolde();
-     * try {
-     * sl = rep.TestBlocked(1, 2, 4, 200400);
-     * historique = HistoREP.getDernierHistorique(2);
-     * sl = rep.FaireEncherir(historique);
-     * return sl;
-     * } catch (Exception e) {
-     * // TODO Auto-generated catch block
-     * sl.setSituation(e.toString());
-     * // System.out.print(ex)
-     * e.printStackTrace();
-     * // return sl;
-     * // e.printStackTrace();
-     * }
-     * return sl;
-     * // return "success";
-     * }
-     */
-
     @RequestMapping(value = "/Encherir/{prix}&&{produitid}&&{id}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
+    @CrossOrigin("https://exquisite-marigold-63df7f.netlify.app/")
     public ArrayList<Data> Enherire(@PathVariable(value = "prix") double prix,
             @PathVariable(value = "produitid") int produitid,
             @PathVariable(value = "id") int id) {
@@ -273,7 +221,6 @@ public class FrontOfficeController {
         try {
             solde = rep.FaireEncherir(historique);
         } catch (Exception ex) {
-
             ex.printStackTrace();
         }
 
@@ -285,7 +232,7 @@ public class FrontOfficeController {
         return __data;
     }
 
-    @CrossOrigin
+    @CrossOrigin("https://exquisite-marigold-63df7f.netlify.app/")
     @ResponseBody
     @RequestMapping(value = "/HistoriqueUtilisateurs/{iduser}", method = RequestMethod.GET, produces = "application/json")
 
@@ -307,7 +254,31 @@ public class FrontOfficeController {
         return _data;
     }
 
-    @CrossOrigin
+    @CrossOrigin("https://exquisite-marigold-63df7f.netlify.app/")
+    @ResponseBody
+    @RequestMapping(value = "/ProduitCategories", method = RequestMethod.GET, produces = "application/json")
+    public ArrayList<Data> getCategorie() {
+
+        ArrayList<Data> _data = new ArrayList<>();
+        try {
+            ArrayList<Categorie> produit = repOFF.getCategorie();
+            data.setData(produit);
+            _data.add(data);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            status = 500;
+            message = "Une erreur s'est produite : " + e;
+            Erreur __error = new Erreur(status, message);
+            error.add(__error);
+            data.setData(error);
+            // TODO: handle exception
+        }
+        return _data;
+        /// return new SomeData();
+    }
+
+    @CrossOrigin("https://exquisite-marigold-63df7f.netlify.app/")
     @ResponseBody
     @RequestMapping(value = "/encheresPropres/{iduser}", method = RequestMethod.GET, produces = "application/json")
     public ArrayList<Data> getHistoriquePropre(@PathVariable(value = "iduser") int id) {
@@ -329,7 +300,7 @@ public class FrontOfficeController {
         return _data;
     }
 
-    @CrossOrigin
+    @CrossOrigin("https://exquisite-marigold-63df7f.netlify.app/")
     @ResponseBody
     @RequestMapping(value = "/encheresNormes/{iduser}", method = RequestMethod.GET, produces = "application/json")
     public ArrayList<Data> getHistoriqueNorme(@PathVariable(value = "iduser") int id) {
@@ -349,7 +320,7 @@ public class FrontOfficeController {
         return _data;
     }
 
-    @CrossOrigin
+    @CrossOrigin("https://exquisite-marigold-63df7f.netlify.app/")
     @ResponseBody
     @RequestMapping(value = "/photos/{idproduit}", method = RequestMethod.GET, produces = "application/json")
     public ArrayList<Data> getPhotos(@PathVariable(value = "idproduit") int idproduit) {
@@ -368,9 +339,10 @@ public class FrontOfficeController {
         }
         return _data;
     }
+
     @RequestMapping(value = "/Encheres", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
-    @CrossOrigin
+    @CrossOrigin("https://exquisite-marigold-63df7f.netlify.app/")
     public ArrayList<Data> CreateEnchere(@RequestBody String body,
             HttpServletRequest request) {
         try {
@@ -399,10 +371,11 @@ public class FrontOfficeController {
         return null;
     }
 
-    // @RequestMapping(value = "/historiques", method = RequestMethod.GET, produces = "application/json")
+    // @RequestMapping(value = "/historiques", method = RequestMethod.GET, produces
+    // = "application/json")
     // @ResponseBody
     // public List<HistoriqueUtilisateur> getHistoriques() {
-    //     return HistoREP.getHistoriqueAll();
+    // return HistoREP.getHistoriqueAll();
     // }
 
 }
