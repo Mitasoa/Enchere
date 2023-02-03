@@ -255,7 +255,7 @@ public class FrontOfficeController {
         return _data;
     }
 
-    @CrossOrigin("https://exquisite-marigold-63df7f.netlify.app/fiche")
+    @CrossOrigin("https://exquisite-marigold-63df7f.netlify.app/")
     @ResponseBody
     @RequestMapping(value = "/Categories", method = RequestMethod.GET, produces = "application/json")
     public ArrayList<Data> getCategorie() {
