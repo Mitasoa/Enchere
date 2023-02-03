@@ -33,19 +33,26 @@ public class ChiffreAffaireRepository {
                 new BeanPropertyRowMapper<ChiffreAffaire>(ChiffreAffaire.class));
     }
 
-    public void execute() {
+    public ArrayList<Produit> execute() {
         String sql = "SELECT * FROM enchere WHERE  etat = 0 AND status = 'termine' ";
-        ArrayList<Produit> produits = (ArrayList<Produit>) jdbcTemplate.query(sql,
+        ArrayList<Produit> produits =  (ArrayList<Produit>) jdbcTemplate.query(sql,
                 new BeanPropertyRowMapper<Produit>(Produit.class));
         System.out.println(produits.size());
-        for (int i = 0; i < produits.size(); i++) {
-            double prix = ((Produit) produits.get(i)).getPrix();
-            int id = ((Produit) produits.get(i)).getId();
-            String insert = "INSERT INTO Commission VALUES (DEFAULT,((SELECT taux FROM TauxComission ORDER BY date DESC LIMIT 1)/100)*("
-                    + prix + "),DEFAULT)";
+        for (int i = 0;i < produits.size(); i++) {
+            double prix = ((Produit)produits.get(i)).getPrix();
+            int id = ((Produit)produits.get(i)).getId();
+            String insert = "INSERT INTO Commission VALUES (DEFAULT,((SELECT taux FROM TauxComission ORDER BY date DESC LIMIT 1)/100)*("+prix+"),CURRENT_TIMESTAMP,?)";
             String update = "UPDATE Produit set etat = 1 WHERE id = ?";
-            jdbcTemplate.update(insert);
+            jdbcTemplate.update(insert,id);
             jdbcTemplate.update(update, id);
         }
+        return produits;
+    }
+
+    public ArrayList<Produit> notif() {
+        String sql = "SELECT * FROM enchere WHERE  etat = 1";
+        ArrayList<Produit> produits =  (ArrayList<Produit>) jdbcTemplate.query(sql,
+                new BeanPropertyRowMapper<Produit>(Produit.class));
+        return produits;
     }
 }

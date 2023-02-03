@@ -3,6 +3,7 @@ package com.enchere.enchere.controller;
 import com.enchere.enchere.model.ChiffreAffaire;
 import com.enchere.enchere.model.Data;
 import com.enchere.enchere.model.Erreur;
+import com.enchere.enchere.model.Produit;
 import com.enchere.enchere.repository.ChiffreAffaireRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,6 +41,46 @@ public class ChiffreAffaireController {
             error.add(__error);
         } finally {
             rep.execute();
+        }
+        __data.add(data);
+        return __data;
+    }
+
+    // Select
+    @RequestMapping(value = "/Notification", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    @CrossOrigin
+    public ArrayList<Data> notif(HttpServletRequest request) {
+        ArrayList<Data> __data = new ArrayList<>();
+        try {
+            ArrayList<Produit> cA = rep.execute();
+            data.setData(cA);
+            System.out.println(cA.size());
+        } catch (Exception ex) {
+            status = 500;
+            message = "Error d'acces base de donnee detecter";
+            Erreur __error = new Erreur(status, message);
+            error.add(__error);
+        }
+        __data.add(data);
+        return __data;
+    }
+
+    // Select
+    @RequestMapping(value = "/NotificationTermine", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    @CrossOrigin
+    public ArrayList<Data> getNotif(HttpServletRequest request) {
+        ArrayList<Data> __data = new ArrayList<>();
+        try {
+            ArrayList<Produit> cA = rep.notif();
+            data.setData(cA);
+            System.out.println(cA.size());
+        } catch (Exception ex) {
+            status = 500;
+            message = "Error d'acces base de donnee detecter";
+            Erreur __error = new Erreur(status, message);
+            error.add(__error);
         }
         __data.add(data);
         return __data;
