@@ -89,7 +89,7 @@ public class FicheEncheres {
             // DAO.findAll();
             // DAO.
 
-            fiche.get(i).setSary(DAO.getPhoto());//// Integer.toString(fiche.get(i).getId())Sort.by({"id":fiche.get(i)})
+            fiche.get(i).setSary(DAO.getPhoto(this.id));//// Integer.toString(fiche.get(i).getId())Sort.by({"id":fiche.get(i)})
         }
     }
 
