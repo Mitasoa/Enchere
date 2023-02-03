@@ -368,36 +368,36 @@ public class FrontOfficeController {
         }
         return _data;
     }
-    // @RequestMapping(value = "/Encheres", method = RequestMethod.POST, produces = "application/json")
-    // @ResponseBody
-    // @CrossOrigin
-    // public ArrayList<Data> CreateEnchere(@RequestBody String body,
-    //         HttpServletRequest request) {
-    //     try {
-    //         // Token token = new Token().ToToken(tok);
-    //         ArrayList<Data> __data = new ArrayList<>();
-    //         Produit produit = new Produit();
-    //         produit.setNom(request.getParameter("nom"));
-    //         produit.setUtilisateurid(Integer.parseInt(request.getParameter("idUtilisateur")));
-    //         produit.setCategorieid(Integer.parseInt(request.getParameter("categorieid")));
-    //         produit.setDateencheriser(LocalDateTime.now());
-    //         produit.setDuree(LocalTime.parse(request.getParameter("duree")));
-    //         produit.setPrix(Double.parseDouble(request.getParameter("prix")));
-    //         // produit.setDateencheriser(new);
-    //         int idprod = ProdREP.InsertProduit(produit);
-    //         Photo[] sary = photo.ToPhoto(idprod, body);
-    //         produit.setPhoto(sary);
-    //         ArrayList<Produit> ReturnProduit = new ArrayList<>();
-    //         ReturnProduit.add(produit);
-    //         data.setData(ReturnProduit);
-    //         __data.add(data);
-    //         return __data;
-    //     } catch (Exception e) {
-    //         // TODO: handle exception
-    //         e.printStackTrace();
-    //     }
-    //     return null;
-    // }
+    @RequestMapping(value = "/Encheres", method = RequestMethod.POST, produces = "application/json")
+    @ResponseBody
+    @CrossOrigin
+    public ArrayList<Data> CreateEnchere(@RequestBody String body,
+            HttpServletRequest request) {
+        try {
+            // Token token = new Token().ToToken(tok);
+            ArrayList<Data> __data = new ArrayList<>();
+            Produit produit = new Produit();
+            produit.setNom(request.getParameter("nom"));
+            produit.setUtilisateurid(Integer.parseInt(request.getParameter("idUtilisateur")));
+            produit.setCategorieid(Integer.parseInt(request.getParameter("categorieid")));
+            produit.setDateencheriser(LocalDateTime.now());
+            produit.setDuree(LocalTime.parse(request.getParameter("duree")));
+            produit.setPrix(Double.parseDouble(request.getParameter("prix")));
+            // produit.setDateencheriser(new);
+            int idprod = ProdREP.InsertProduit(produit);
+            Photo[] sary = photo.ToPhoto(idprod, body);
+            produit.setPhoto(sary);
+            ArrayList<Produit> ReturnProduit = new ArrayList<>();
+            ReturnProduit.add(produit);
+            data.setData(ReturnProduit);
+            __data.add(data);
+            return __data;
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     // @RequestMapping(value = "/historiques", method = RequestMethod.GET, produces = "application/json")
     // @ResponseBody

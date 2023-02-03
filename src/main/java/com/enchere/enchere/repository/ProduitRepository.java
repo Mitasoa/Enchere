@@ -130,4 +130,18 @@ public class ProduitRepository {
 
     }
 
+    public int InsertProduit(Produit prod) {
+        String sql = "insert into produit(nom,prix,utilisateurid,categorieid,duree,dateEncheriser)values(?,?,?,?,?,CURRENT_TIMESTAMP)";
+        try {
+            jdbcTemplate.update(sql, prod.getNom(), prod.getPrix(), prod.getUtilisateurid(), prod.getCategorieid(),
+                    prod.getDuree());
+            Produit prodRET = getOneProduit(prod);
+            return prodRET.getId();
+        } catch (Exception e) {
+            // TODO: handle exception
+            throw e;
+        }
+    }
+
+
 }
