@@ -73,7 +73,7 @@ public class FicheEncheres {
         this.nom = produit;
     }
 
-    public String getProduit() {
+    public String getNom() {
         return nom;
     }
 
