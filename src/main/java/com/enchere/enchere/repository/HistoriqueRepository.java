@@ -51,7 +51,6 @@ public class HistoriqueRepository {
                 return new HistoriqueUtilisateur();
                 // TODO: handle exception
             }
-
         }
         return new HistoriqueUtilisateur();
     }

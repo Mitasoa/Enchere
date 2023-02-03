@@ -172,7 +172,7 @@ public class FrontOfficeController {
             }
             FicheEncheres fiche = new FicheEncheres();
             fiche.setCategorie(request.getParameter("categorie"));
-            fiche.setProduit(request.getParameter("produit"));
+            fiche.setNom(request.getParameter("produit"));
             fiche.setStatus(request.getParameter("status"));
             if (request.getParameter("dateFin") != null) {
                 fiche.setDatefin(LocalDateTime.parse(request.getParameter("dateFin")));
@@ -221,7 +221,6 @@ public class FrontOfficeController {
         try {
             solde = rep.FaireEncherir(historique);
         } catch (Exception ex) {
-
             ex.printStackTrace();
         }
 

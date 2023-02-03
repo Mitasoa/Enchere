@@ -14,7 +14,7 @@ public class FicheEncheres {
     int id;
     String Categorie;
     double prix;
-    String produit;
+    String nom;
     LocalDateTime datefin;
     String status;
     ArrayList<Photo> sary;
@@ -60,12 +60,12 @@ public class FicheEncheres {
         return prix;
     }
 
-    public void setProduit(String produit) {
-        this.produit = produit;
+    public void setNom(String produit) {
+        this.nom = produit;
     }
 
     public String getProduit() {
-        return produit;
+        return nom;
     }
 
     public void setDatefin(LocalDateTime datefin) {
