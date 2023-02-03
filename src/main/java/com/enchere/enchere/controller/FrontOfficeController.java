@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.enchere.enchere.DAO.HistoriqueDAO;
+import com.enchere.enchere.model.Categorie;
 import com.enchere.enchere.model.Data;
 import com.enchere.enchere.model.Erreur;
 import com.enchere.enchere.model.EtatSolde;
@@ -126,7 +127,7 @@ public class FrontOfficeController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
-    @CrossOrigin
+    @CrossOrigin("https://exquisite-marigold-63df7f.netlify.app/")
     public ArrayList<Data> Login(HttpServletRequest request) {
         ArrayList<Data> __data = new ArrayList<>();
         if (request.getParameter("email") != null && request.getParameter("mdp") != null) {
@@ -193,62 +194,6 @@ public class FrontOfficeController {
         return __data;
     }
 
-    /*
-     * @RequestMapping(value = "/photo", method = RequestMethod.GET, produces =
-     * "application/json")
-     * 
-     * @ResponseBody
-     * public Optional<Photo> getPhoto() {
-     * // photo.
-     * return photo.findById("{id:" + 1 + "}");
-     * }
-     */
-
-    /*
-     * @RequestMapping(value = "/histo/{nom}", method = RequestMethod.GET, produces
-     * = "application/json")
-     * 
-     * @ResponseBody
-     * public List<HistoriqueUtilisateur> Histo(@PathVariable(value = "nom") String
-     * param) {
-     * // return histo.findAll();
-     * // Query query = new Query();
-     * // query.addCriteria(Criteria.where("nom").is(param).where("prix").is(0));
-     * // return mongoTemplate.find(query, HistoriqueUtilisateur.class);
-     * Query query = new Query();
-     * query.addCriteria(Criteria.where("etatActuelle").is(1).where("produitid").is(
-     * 2)
-     * .where("utilisateuridacheteur").is(4));
-     * return mongoTemplate.find(query, HistoriqueUtilisateur.class);
-     * }
-     * 
-     * @RequestMapping(value = "/TEST/{nom}", method = RequestMethod.GET, produces =
-     * "application/json")
-     * 
-     * @ResponseBody
-     * public EtatSolde TEST(@PathVariable(value = "nom") String param) {
-     * // HistoriqueUtilisateur
-     * /// ProduitRepository rep = new ProduitRepository();
-     * HistoriqueUtilisateur historique = new HistoriqueUtilisateur();
-     * EtatSolde sl = new EtatSolde();
-     * try {
-     * sl = rep.TestBlocked(1, 2, 4, 200400);
-     * historique = HistoREP.getDernierHistorique(2);
-     * sl = rep.FaireEncherir(historique);
-     * return sl;
-     * } catch (Exception e) {
-     * // TODO Auto-generated catch block
-     * sl.setSituation(e.toString());
-     * // System.out.print(ex)
-     * e.printStackTrace();
-     * // return sl;
-     * // e.printStackTrace();
-     * }
-     * return sl;
-     * // return "success";
-     * }
-     */
-
     @RequestMapping(value = "/Encherir/{prix}&&{produitid}&&{id}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     @CrossOrigin("https://exquisite-marigold-63df7f.netlify.app/")
@@ -308,6 +253,30 @@ public class FrontOfficeController {
             data.setData(error);
         }
         return _data;
+    }
+
+    @CrossOrigin("https://exquisite-marigold-63df7f.netlify.app/fiche")
+    @ResponseBody
+    @RequestMapping(value = "/Categories", method = RequestMethod.GET, produces = "application/json")
+    public ArrayList<Data> getCategorie() {
+
+        ArrayList<Data> _data = new ArrayList<>();
+        try {
+            ArrayList<Categorie> produit = repOFF.getCategorie();
+            data.setData(produit);
+            _data.add(data);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            status = 500;
+            message = "Une erreur s'est produite : " + e;
+            Erreur __error = new Erreur(status, message);
+            error.add(__error);
+            data.setData(error);
+            // TODO: handle exception
+        }
+        return _data;
+        /// return new SomeData();
     }
 
     @CrossOrigin("https://exquisite-marigold-63df7f.netlify.app/")
