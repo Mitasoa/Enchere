@@ -105,6 +105,8 @@ public class ProduitRepository {
         return etatsolde;
     }
 
+    
+
     public Produit getOneProduit(Produit prod) {
         String sql2 = "select id from produit where nom=? and prix=? and utilisateurid=? and categorieid=? and duree=?";
         ArrayList<Produit> produit = (ArrayList<Produit>) jdbcTemplate.query(sql2,
@@ -145,6 +147,13 @@ public class ProduitRepository {
             throw e;
         }
 
+    }
+
+    public ArrayList<Photo> getPhoto() {
+        String sql = "SELECT * FROM Photo";
+        ArrayList<Photo> tab = (ArrayList<Photo>) jdbcTemplate.query(sql,
+                new BeanPropertyRowMapper<Photo>(Photo.class));
+        return tab;
     }
 
 }

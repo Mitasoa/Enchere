@@ -15,15 +15,25 @@ public class HistoriqueUtilisateur {
     // id | nom | prix | utilisateuridvendeur | utilisateuridacheteur | categorieid
     // | dateencheriser | duree
 
+    int id;
     String nom;
     double prix;
     int utilisateuridvendeur;
     int utilisateuridacheteur;
     int categorieid;
-    String dateencheriser;
-    String duree;
+    Date dateencheriser;
+    LocalTime duree;
     int etatActuelle;
     int produitid;
+    String categorie;
+
+    public void setCategorie(String categorie) {
+        this.categorie = categorie;
+    }
+
+    public String getCategorie() {
+        return categorie;
+    }
 
     public void setProduitid(int produitid) {
         this.produitid = produitid;
@@ -45,21 +55,20 @@ public class HistoriqueUtilisateur {
         this.categorieid = categorieid;
     }
 
-    public void setDateencheriser(String dateencheriser) {
-        // this.dateencheriser = LocalDateTime.parse(dateencheriser.replace(" ", "T"));
+    public void setDateencheriser(Date dateencheriser) {
         this.dateencheriser = dateencheriser;
     }
 
-    public void setDuree(String duree) {
+    public void setDuree(LocalTime duree) {
         this.duree = duree;
     }
 
-    // public void setId(int id) {
-    // this.id = id;
-    // }
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public void setNom(String nom) {
-    this.nom = nom;
+        this.nom = nom;
     }
 
     public void setPrix(double prix) {
@@ -78,12 +87,16 @@ public class HistoriqueUtilisateur {
         return categorieid;
     }
 
-    public String getDateencheriser() {
+    public Date getDateencheriser() {
         return dateencheriser;
     }
 
-    public String getDuree() {
+    public LocalTime getDuree() {
         return duree;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getNom() {

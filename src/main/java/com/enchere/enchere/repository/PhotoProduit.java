@@ -29,11 +29,14 @@ public class PhotoProduit {
         try {
             // jdbc.update(sql, 24, "photo[0].getSary()");
             for (int i = 0; i < photo.length; i++) {
-                String sql = "insert into photo(idproduit,sary)values('" + photo[i].getIdproduit() + "','"
-                        + photo[i].getSary() + "')";
-                System.out.print("DATA====>" + photo[i].getIdproduit() + "," +
-                        photo[i].getSary());
-                jdbc.update(sql);
+                // if (photo[i].getSary() != null && photo[i].getSary() != "") {
+                // String sql = "insert into photo(idproduit,sary)values('" +
+                // photo[i].getIdproduit() + "','"
+                // + photo[i].getSary() + "')";
+                // System.out.print("DATA====>" + photo[i].getIdproduit() + "," +
+                // photo[i].getSary());
+                // jdbc.update(sql);
+                // }
             }
             return "Success";
         } catch (Exception e) {
@@ -45,18 +48,27 @@ public class PhotoProduit {
     }
 
     public Photo[] ToPhoto(int idproduit, String json) {
-
-        Photo[] photo = new Photo[json.split(",").length];
-        System.out.print(json);
+        int length = 0;
+        if (json != "{}") {
+            length = json.split(",").length - 1;
+        }
+        Photo[] photo = new Photo[length];
+        System.out.println(length);
         String json1 = json.replace("{", "");
         String json2 = json1.replace("}", "");
         String json3 = json2.replace("\"", "");
         String[] sary = json3.split(",");
-        for (int i = 0; i < sary.length; i++) {
+        for (int i = 0; i < length; i++) {
             Photo p = new Photo();
             p.setIdproduit(idproduit);
             p.setSary(sary[i]);
             photo[i] = p;
+            if (sary[i].length() < 50) { // Ligne
+                String sql = "insert into photo(idproduit,sary)values('" +
+                        idproduit + "','"
+                        + sary[i] + "')";
+                jdbc.update(sql);
+            }
         }
         return photo;
     }

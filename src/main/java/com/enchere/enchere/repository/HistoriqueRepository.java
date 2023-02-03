@@ -16,63 +16,72 @@ import com.enchere.enchere.model.HistoriqueUtilisateur;
 @Repository
 public class HistoriqueRepository {
     @Autowired
-    private MongoTemplate mongoTemplate;
+    private JdbcTemplate jdbc;
 
-    public List<HistoriqueUtilisateur> getHistorique(int etatActuelle, int produitid, int utilisateurid) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("etatActuelle").is(etatActuelle).where("produitid").is(produitid)
-                .where("utilisateuridacheteur").is(utilisateurid));
-        return mongoTemplate.find(query, HistoriqueUtilisateur.class);
+    public ArrayList<HistoriqueUtilisateur> getHistoActus(int idutil) {
+        String sql = "select * from historiqueutilisateur where utilisateuridacheteur=? and etatactuelle=1";
+        ArrayList<HistoriqueUtilisateur> tab = (ArrayList<HistoriqueUtilisateur>) jdbc.query(sql,
+                new BeanPropertyRowMapper<HistoriqueUtilisateur>(HistoriqueUtilisateur.class), idutil);
+        return tab;
     }
 
     public void UpdateHisto(int idproduit) {
         // mongoTemplate
-
-        Query query = new Query(Criteria.where("produitid").is(idproduit));
-        Update update = new Update().set("etatActuelle", 0);
-        mongoTemplate.updateFirst(query, update, HistoriqueUtilisateur.class);
-    }
-
-    public HistoriqueUtilisateur getDernierHistorique(int idproduit) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("etatActuelle").is(1).where("produitid").is(idproduit));
-        HistoriqueUtilisateur histo = null;
-        try {
-
-            if (mongoTemplate.find(query, HistoriqueUtilisateur.class).size() != 0) {
-                return mongoTemplate.find(query, HistoriqueUtilisateur.class).get(0);
-            }
-            return new HistoriqueUtilisateur();
-        } catch (Exception e) {
-            // TODO: handle exception
-            histo = new HistoriqueUtilisateur();
-            return histo;
-        }
-
-    }
-
-    public List<HistoriqueUtilisateur> getHistoriqueByUtil(int idutilisateur) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("utilisateuridacheteur").is(idutilisateur));
-        return mongoTemplate.find(query, HistoriqueUtilisateur.class);
+        String sql = "update historiqueutilisateur set etatactuelle=20 where produitid=?";
+        jdbc.update(sql, idproduit);
     }
 
     public void InsertHistorique(HistoriqueUtilisateur histo) {
-        mongoTemplate.insert(histo);
+        // nom | prix | utilisateuridvendeur | utilisateuridacheteur | categorieid |
+        // dateencheriser | duree
+        String sql = "insert into historiqueutilisateur(nom,prix,utilisateuridvendeur,utilisateuridacheteur,categorieid,dateencheriser,duree,produitid)values(?,?,?,?,?,?,?,?)";
+        jdbc.update(sql, histo.getNom(), histo.getPrix(), histo.getUtilisateuridvendeur(),
+                histo.getUtilisateuridacheteur(), histo.getCategorieid(), histo.getDateencheriser(), histo.getDuree(),
+                histo.getProduitid());
     }
 
-    public ArrayList<HistoriqueUtilisateur> ToArrayList(List<HistoriqueUtilisateur> histo) {
-        ArrayList<HistoriqueUtilisateur> array = new ArrayList<>();
-        for (int i = 0; i < histo.size(); i++) {
-            array.add(histo.get(i));
+    public HistoriqueUtilisateur getDernierHistorique(int idproduit) {
+        String sql = "select * from historiqueutilisateur where produitid=? and etatActuelle=1";
+        ArrayList<HistoriqueUtilisateur> histo = (ArrayList<HistoriqueUtilisateur>) jdbc.query(sql,
+                new BeanPropertyRowMapper<HistoriqueUtilisateur>(HistoriqueUtilisateur.class), idproduit);
+
+        if (histo != null) {
+            try {
+                return histo.get(0);
+            } catch (Exception e) {
+                return new HistoriqueUtilisateur();
+                // TODO: handle exception
+            }
+
         }
-        return array;
+        return new HistoriqueUtilisateur();
     }
 
-    public List<HistoriqueUtilisateur> getHistoriqueAll() {
-        Query query = new Query();
+    public ArrayList<HistoriqueUtilisateur> getHistoriqueBYID(int idproduit) {
+        String sql = "select * from historiqueutilisateur where produitid=?";
 
-        return mongoTemplate.find(query, HistoriqueUtilisateur.class);
+        return (ArrayList<HistoriqueUtilisateur>) jdbc.query(sql,
+                new BeanPropertyRowMapper<HistoriqueUtilisateur>(HistoriqueUtilisateur.class), idproduit);
+    }
+
+    public ArrayList<HistoriqueUtilisateur> getHistoriqueUsers(int iduser) {
+        String sql = "select * from historiqueutilisateur where utilisateuridvendeur=? or utilisateuridacheteur=?";
+
+        return (ArrayList<HistoriqueUtilisateur>) jdbc.query(sql,
+                new BeanPropertyRowMapper<HistoriqueUtilisateur>(HistoriqueUtilisateur.class), iduser, iduser);
+    }
+
+    public ArrayList<HistoriqueUtilisateur> getPropreHistorique(int iduser) {
+        String sql = "select * from C_HistoriqueUtilisateur where utilisateuridvendeur=?";
+        return (ArrayList<HistoriqueUtilisateur>) jdbc.query(sql,
+                new BeanPropertyRowMapper<HistoriqueUtilisateur>(HistoriqueUtilisateur.class), iduser);
+    }
+
+    public ArrayList<HistoriqueUtilisateur> getHistoriqueNormale(int iduser) {
+        String sql = "select * from C_historiqueUtilisateur where utilisateuridacheteur=?";
+        return (ArrayList<HistoriqueUtilisateur>) jdbc.query(sql,
+                new BeanPropertyRowMapper<HistoriqueUtilisateur>(HistoriqueUtilisateur.class), iduser);
+
     }
 
 }

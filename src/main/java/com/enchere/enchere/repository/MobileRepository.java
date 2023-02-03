@@ -9,8 +9,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
 import com.enchere.enchere.model.Demande;
+import com.enchere.enchere.model.Categorie;
 import com.enchere.enchere.model.Produit;
 import com.enchere.enchere.model.Produit1;
+import com.enchere.enchere.model.Photo;
 import com.enchere.enchere.model.Utilisateur;
 
 @Repository
@@ -29,6 +31,11 @@ public class MobileRepository {
         return (ArrayList<Produit>) jdbcTemplate.query(sql, new BeanPropertyRowMapper<Produit>(Produit.class), id);
     }
 
+    public ArrayList<Categorie> getCategorie() {
+        String sql = "SELECT * FROM Categorie";
+        return (ArrayList<Categorie>) jdbcTemplate.query(sql, new BeanPropertyRowMapper<Categorie>(Categorie.class));
+    }
+
     public void recharger(Demande demande) {
         String sql = "INSERT INTO Demande (idutilisateur,montant, datedemande) VALUES (?,?,?)";
         jdbcTemplate.update(sql, demande.getIdUtilisateur(), demande.getMontant(), demande.getDateDemande());
@@ -44,5 +51,11 @@ public class MobileRepository {
         String sql = "SELECT * FROM Utilisateur WHERE mail=? AND motdepasse=?";
         return (ArrayList<Utilisateur>) jdbcTemplate.query(sql,
                 new BeanPropertyRowMapper<Utilisateur>(Utilisateur.class), user.getMail(), user.getMotdepass());
+    }
+
+    public ArrayList<Photo> getPhoto(int idproduit) {
+        String sql = "SELECT * FROM Photo WHERE idProduit=?";
+        return (ArrayList<Photo>) jdbcTemplate.query(sql,
+                new BeanPropertyRowMapper<Photo>(Photo.class), idproduit);
     }
 }

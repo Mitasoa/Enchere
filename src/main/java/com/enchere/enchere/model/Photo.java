@@ -11,6 +11,16 @@ public class Photo {
 
     int id;
     String sary;
+    String photo;
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
     int idproduit;
 
     public int getId() {
