@@ -135,7 +135,7 @@ public class ProduitRepository {
         try {
             jdbcTemplate.update(sql, prod.getNom(), prod.getPrix(), prod.getUtilisateurid(), prod.getCategorieid(),
                     prod.getDuree());
-            String __sql = "SELECT * FROM Produit WHERE nom=? AND prenom=? AND utilisateurid=? AND duree=? AND dateencheriser=?";
+            String __sql = "SELECT * FROM Produit WHERE nom=? AND prix=? AND utilisateurid=? AND duree=? AND dateencheriser=?";
             ArrayList<Produit> tab = (ArrayList<Produit>) jdbcTemplate.query(__sql,
                 new BeanPropertyRowMapper<Produit>(Produit.class), prod.getNom(), prod.getPrix(), prod.getUtilisateurid(), prod.getCategorieid(),
                     prod.getDuree());
