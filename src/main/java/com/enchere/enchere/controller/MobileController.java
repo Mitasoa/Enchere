@@ -166,7 +166,7 @@ public class MobileController {
         return __data;
     }
 
-    @RequestMapping(value = "/Login", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/Login", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     @CrossOrigin
     public ArrayList<Data> connecter(HttpServletRequest request) {

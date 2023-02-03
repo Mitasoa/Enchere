@@ -122,9 +122,9 @@ public class FrontOfficeController {
 
     }
 
-    @CrossOrigin
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
+    @CrossOrigin
     public ArrayList<Data> Login(HttpServletRequest request) {
         ArrayList<Data> __data = new ArrayList<>();
         if (request.getParameter("email") != null && request.getParameter("mdp") != null) {
