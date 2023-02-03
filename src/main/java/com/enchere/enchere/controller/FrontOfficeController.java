@@ -261,9 +261,9 @@ public class FrontOfficeController {
         historique.setPrix(prix);
         historique.setNom(produit.getNom());
 
-        historique.setDuree(produit.getDuree().toString());
+        historique.setDuree(LocalTime.parse(produit.getDuree().toString()));
         historique.setUtilisateuridvendeur(produit.getId());
-        historique.setDateencheriser(dt.toString());
+        historique.setDateencheriser(Date.valueOf(dt.toString()));
         System.out.print(produitid + "===TESTYUIOP" + prix);
         historique.setProduitid(produitid);
         // historique.set
@@ -285,54 +285,124 @@ public class FrontOfficeController {
         return __data;
     }
 
-    @RequestMapping(value = "/historiques/{idutilisateur}", method = RequestMethod.GET, produces = "application/json")
-    @ResponseBody
-    public ArrayList<Data> getHistorique(@PathVariable int idutilisateur) {
-        // Token token = new Token().ToToken(tok);
-        List<HistoriqueUtilisateur> historique = HistoREP.getHistoriqueByUtil(idutilisateur);
-
-        ArrayList<HistoriqueUtilisateur> tab = HistoREP.ToArrayList(historique);
-        ArrayList<Data> __data = new ArrayList<>();
-        data.setData(tab);
-        __data.add(data);
-        return __data;
-    }
-
-    @RequestMapping(value = "/Encheres", method = RequestMethod.POST, produces = "application/json")
-    @ResponseBody
     @CrossOrigin
-    public ArrayList<Data> CreateEnchere(@RequestBody String body,
-            HttpServletRequest request) {
+    @ResponseBody
+    @RequestMapping(value = "/HistoriqueUtilisateurs/{iduser}", method = RequestMethod.GET, produces = "application/json")
+
+    public ArrayList<Data> getHistoriqueUtildateurs(@PathVariable int iduser) {
+        ArrayList<Data> _data = new ArrayList<>();
         try {
-            // Token token = new Token().ToToken(tok);
-            ArrayList<Data> __data = new ArrayList<>();
-            Produit produit = new Produit();
-            produit.setNom(request.getParameter("nom"));
-            produit.setUtilisateurid(Integer.parseInt(request.getParameter("idUtilisateur")));
-            produit.setCategorieid(Integer.parseInt(request.getParameter("categorieid")));
-            produit.setDateencheriser(LocalDateTime.now());
-            produit.setDuree(LocalTime.parse(request.getParameter("duree")));
-            produit.setPrix(Double.parseDouble(request.getParameter("prix")));
-            // produit.setDateencheriser(new);
-            int idprod = ProdREP.InsertProduit(produit);
-            Photo[] sary = photo.ToPhoto(idprod, body);
-            produit.setPhoto(sary);
-            ArrayList<Produit> ReturnProduit = new ArrayList<>();
-            ReturnProduit.add(produit);
-            data.setData(ReturnProduit);
-            __data.add(data);
-            return __data;
+            ArrayList<HistoriqueUtilisateur> histoUtil = HistoREP.getHistoriqueUsers(iduser);
+            data.setData(histoUtil);
+            _data.add(data);
         } catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
+            status = 500;
+            message = "Une erreur s'est produite : " + e;
+            Erreur __error = new Erreur(status, message);
+            error.add(__error);
+            data.setData(error);
         }
-        return null;
+        return _data;
     }
 
-    @RequestMapping(value = "/historiques", method = RequestMethod.GET, produces = "application/json")
+    @CrossOrigin
     @ResponseBody
-    public List<HistoriqueUtilisateur> getHistoriques() {
-        return HistoREP.getHistoriqueAll();
+    @RequestMapping(value = "/encheresPropres/{iduser}", method = RequestMethod.GET, produces = "application/json")
+    public ArrayList<Data> getHistoriquePropre(@PathVariable(value = "iduser") int id) {
+        ArrayList<Data> _data = new ArrayList<Data>();
+        try {
+            ArrayList<HistoriqueUtilisateur> histo = HistoREP.getPropreHistorique(id);
+            System.out.print(histo.size());
+            data.setData(histo);
+            _data.add(data);
+        } catch (Exception e) {
+            e.printStackTrace();
+            status = 500;
+            message = "Une erreur s'est produite : " + e;
+            Erreur __error = new Erreur(status, message);
+            error.add(__error);
+            data.setData(error);
+            // TODO: handle exception
+        }
+        return _data;
     }
+
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/encheresNormes/{iduser}", method = RequestMethod.GET, produces = "application/json")
+    public ArrayList<Data> getHistoriqueNorme(@PathVariable(value = "iduser") int id) {
+        ArrayList<Data> _data = new ArrayList<Data>();
+        try {
+            ArrayList<HistoriqueUtilisateur> histo = HistoREP.getHistoriqueNormale(id);
+            data.setData(histo);
+            _data.add(data);
+        } catch (Exception e) {
+            status = 500;
+            message = "Une erreur s'est produite : " + e;
+            Erreur __error = new Erreur(status, message);
+            error.add(__error);
+            data.setData(error);
+            // TODO: handle exception
+        }
+        return _data;
+    }
+
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/photos/{idproduit}", method = RequestMethod.GET, produces = "application/json")
+    public ArrayList<Data> getPhotos(@PathVariable(value = "idproduit") int idproduit) {
+        ArrayList<Data> _data = new ArrayList<>();
+        try {
+            ArrayList<Photo> photo = ProdREP.getPhoto(idproduit);
+            data.setData(photo);
+            _data.add(data);
+        } catch (Exception e) {
+            // TODO: handle exception
+            status = 500;
+            message = "Une erreur s'est produite : " + e;
+            Erreur __error = new Erreur(status, message);
+            error.add(__error);
+            data.setData(error);
+        }
+        return _data;
+    }
+    // @RequestMapping(value = "/Encheres", method = RequestMethod.POST, produces = "application/json")
+    // @ResponseBody
+    // @CrossOrigin
+    // public ArrayList<Data> CreateEnchere(@RequestBody String body,
+    //         HttpServletRequest request) {
+    //     try {
+    //         // Token token = new Token().ToToken(tok);
+    //         ArrayList<Data> __data = new ArrayList<>();
+    //         Produit produit = new Produit();
+    //         produit.setNom(request.getParameter("nom"));
+    //         produit.setUtilisateurid(Integer.parseInt(request.getParameter("idUtilisateur")));
+    //         produit.setCategorieid(Integer.parseInt(request.getParameter("categorieid")));
+    //         produit.setDateencheriser(LocalDateTime.now());
+    //         produit.setDuree(LocalTime.parse(request.getParameter("duree")));
+    //         produit.setPrix(Double.parseDouble(request.getParameter("prix")));
+    //         // produit.setDateencheriser(new);
+    //         int idprod = ProdREP.InsertProduit(produit);
+    //         Photo[] sary = photo.ToPhoto(idprod, body);
+    //         produit.setPhoto(sary);
+    //         ArrayList<Produit> ReturnProduit = new ArrayList<>();
+    //         ReturnProduit.add(produit);
+    //         data.setData(ReturnProduit);
+    //         __data.add(data);
+    //         return __data;
+    //     } catch (Exception e) {
+    //         // TODO: handle exception
+    //         e.printStackTrace();
+    //     }
+    //     return null;
+    // }
+
+    // @RequestMapping(value = "/historiques", method = RequestMethod.GET, produces = "application/json")
+    // @ResponseBody
+    // public List<HistoriqueUtilisateur> getHistoriques() {
+    //     return HistoREP.getHistoriqueAll();
+    // }
 
 }

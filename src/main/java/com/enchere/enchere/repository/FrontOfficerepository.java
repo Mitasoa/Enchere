@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.enchere.enchere.model.Admin;
+import com.enchere.enchere.model.Categorie;
 import com.enchere.enchere.model.FicheEncheres;
 
 @Repository
@@ -21,6 +22,13 @@ public class FrontOfficerepository {
         String sql = "SELECT * FROM ficheencheres";
         return (ArrayList<FicheEncheres>) jdbcTemplate.query(sql,
                 new BeanPropertyRowMapper<FicheEncheres>(FicheEncheres.class));
+    }
+
+    public ArrayList<FicheEncheres> getFicheProduitPAGINE(int offset) {
+
+        String sql = "SELECT * FROM ficheencheres offset ? limit 4";
+        return (ArrayList<FicheEncheres>) jdbcTemplate.query(sql,
+                new BeanPropertyRowMapper<FicheEncheres>(FicheEncheres.class),offset);
     }
 
     public ArrayList<FicheEncheres> rechercheAvancer(FicheEncheres fiche, String motCle) {
@@ -44,5 +52,13 @@ public class FrontOfficerepository {
         System.out.println(sql);
         return (ArrayList<FicheEncheres>) jdbcTemplate.query(sql,
                 new BeanPropertyRowMapper<FicheEncheres>(FicheEncheres.class));
+    }
+
+    public ArrayList<Categorie> getCategorie() {
+
+        String sql = "select * from categorie";
+        ArrayList<Categorie> produit = (ArrayList<Categorie>) jdbcTemplate.query(sql,
+                new BeanPropertyRowMapper<Categorie>(Categorie.class));
+        return produit;
     }
 }

@@ -1,7 +1,7 @@
 package com.enchere.enchere.model;
 
 import java.sql.Date;
-import java.time.LocalDateTime;
+import java.sql.Time;
 import java.time.LocalTime;
 
 import javax.xml.namespace.QName;
@@ -14,6 +14,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class HistoriqueUtilisateur {
     // id | nom | prix | utilisateuridvendeur | utilisateuridacheteur | categorieid
     // | dateencheriser | duree
+
+    @Id
+    private ObjectId _id;
 
     int id;
     String nom;
