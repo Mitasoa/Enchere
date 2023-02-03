@@ -135,8 +135,15 @@ public class ProduitRepository {
         try {
             jdbcTemplate.update(sql, prod.getNom(), prod.getPrix(), prod.getUtilisateurid(), prod.getCategorieid(),
                     prod.getDuree());
-            Produit prodRET = getOneProduit(prod);
-            return prodRET.getId();
+            String __sql = "SELECT * FROM Produit WHERE nom=?,prenom=?,utilisateurid=?,duree=?,dateencheriser=?";
+            ArrayList<Produit> tab = (ArrayList<Produit>) jdbcTemplate.query(__sql,
+                new BeanPropertyRowMapper<Produit>(Produit.class), prod.getNom(), prod.getPrix(), prod.getUtilisateurid(), prod.getCategorieid(),
+                    prod.getDuree());
+            int idprod = 1;
+            for (int i = 0; i < tab.size(); i++) {
+                idprod = tab.get(i).getId();
+            }
+            return 1;
         } catch (Exception e) {
             // TODO: handle exception
             throw e;
